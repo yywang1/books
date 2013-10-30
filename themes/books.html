@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ava is reading...</title>
+<link rel="stylesheet" type="text/css" href="css/global.css">
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#key").inputVal({str:"请输入关键字"});
+})
+</script>
+</head>
+
+<body>
+<div class="header clearfix">
+    <a href="index.html" class="logo">Ava is reading...</a>
+    <ul class="topNav">
+        <li><a href="books.html">浏览书库</a></li>
+        <li><a href="manage.html">管理书库</a></li>
+    </ul>
+    <div id="topSearch">
+        <form action="search.php" method="post">
+            <input type="text" name="keyword" id="topSearchText">
+            <input type="submit" value="search" id="topSearchBtn">
+        </form>
+    </div>
+</div>
+<div class="main_browse">
+    <div class="sidebar">
+        <section class="sbSearch">
+            <div class="sele">
+                <input type="text" class="text" value="书名" readonly>
+                <ul>
+                    <li>书名</li>
+                    <li>作者</li>
+                    <li>主角</li>
+                </ul>
+            </div>
+            <input type="text" class="text" value="请输入关键字" id="key">
+            <input class="btn5" type="button" value="搜  索">
+        </section>
+        <section class="sbSearch">
+            <div class="sele">
+                <input type="text" class="text" value="上传时间" readonly>
+                <ul>
+                    <li>上传时间不限</li>
+                    <li>近一个月</li>
+                    <li>近三个月</li>
+                    <li>近半年</li>
+                    <li>近一年</li>
+                </ul>
+            </div>
+            <div class="sele">
+                <input type="text" class="text" value="类型" readonly>
+                <ul>
+                    <li>类型不限</li>
+                    <li>耽美</li>
+                    <li>言情</li>
+                    <li>魔法斗气</li>
+                    <li>玄幻武侠</li>
+                    <li>异世修真</li>
+                    <li>都市异能</li>
+                    <li>种田生活</li>
+                    <li>历史军事</li>
+                    <li>竞技游戏</li>
+                    <li>未来星际</li>
+                </ul>
+            </div>
+            <div class="sele">
+                <input type="text" class="text" value="原创性" readonly>
+                <ul>
+                    <li>原创性不限</li>
+                    <li>原创</li>
+                    <li>动漫同人</li>
+                    <li>影视同人</li>
+                    <li>小说同人</li>
+                    <li>历史同人</li>
+                    <li>其它同人</li>
+                </ul>
+            </div>
+            <div class="sele">
+                <input type="text" class="text" value="文风" readonly>
+                <ul>
+                    <li>文风不限</li>
+                    <li>甜文</li>
+                    <li>轻松</li>
+                    <li>爆笑</li>
+                    <li>正剧</li>
+                    <li>微虐</li>
+                    <li>很虐</li>
+                    <li>悲剧</li>
+                </ul>
+            </div>
+            <div class="sele">
+                <input type="text" class="text" value="评价及状态" readonly>
+                <ul>
+                    <li>状态不限</li>
+                    <li>未读</li>
+                    <li>一般</li>
+                    <li>好文</li>
+                    <li>经典</li>
+                </ul>
+            </div>
+            <input class="btn5" type="button" value="搜  索">
+        </section>
+        <section class="sbhot">
+            <h3>热门搜索：</h3>
+            <a href="#">耽美</a><a href="#">言情</a><a href="#">同人</a><a href="#">空间</a><a href="#">末世</a><a href="#">异世</a> </section>
+    </div>
+    <div class="result">
+        <section class="filter">
+            <div class="sort">
+                <span>排序：</span><a href="javascript:void(0)" class="cur">上传时间</a><a href="javascript:void(0)">小说字数</a>
+            </div>
+            <div class="total">
+                共<span>9999</span>条记录，<span>200</span>页
+            </div>
+        </section>
+        <ul class="novList listing">
+            <li>
+                <div class="t">
+                    <h3><a href="#">地球人同居手册</a><span>作者：弃妇A</span></h3>
+                    <span class="eva unread">未读</span>
+                </div>
+                <div class="d">
+                    一个外星阴狠受被父母打包扔上了前往愚昧无知、野蛮封建的文明未开化的星球──地球的旅游飞船，而随行的居然只有一本带有明显误导倾向的《地球人同居手册》！！<br>
+                    身为幼儿园老师的温柔攻X外星阴狠受的爆笑爱情XDDDDD。
+                </div>
+                <div class="o">
+                    <p class="oc1">分类：耽美 原创<span>|</span>文风：爆笑<span>|</span>主角：闫博阳，雷里福吉雅</p>
+                    <p class="oc2"><a href="#">下载</a><a href="#">编辑</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="t">
+                    <h3><a href="#">地球人同居手册</a><span>作者：弃妇A</span></h3>
+                    <span class="eva general">一般</span>
+                </div>
+                <div class="d">
+                    一个外星阴狠受被父母打包扔上了前往愚昧无知、野蛮封建的文明未开化的星球──地球的旅游飞船，而随行的居然只有一本带有明显误导倾向的《地球人同居手册》！！<br>
+                    身为幼儿园老师的温柔攻X外星阴狠受的爆笑爱情XDDDDD。
+                </div>
+                <div class="o">
+                    <p class="oc1">分类：耽美 原创<span>|</span>文风：爆笑<span>|</span>主角：闫博阳，雷里福吉雅</p>
+                    <p class="oc2"><a href="#">下载</a><a href="#">编辑</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="t">
+                    <h3><a href="#">地球人同居手册</a><span>作者：弃妇A</span></h3>
+                    <span class="eva good">好文</span>
+                </div>
+                <div class="d">
+                    一个外星阴狠受被父母打包扔上了前往愚昧无知、野蛮封建的文明未开化的星球──地球的旅游飞船，而随行的居然只有一本带有明显误导倾向的《地球人同居手册》！！<br>
+                    身为幼儿园老师的温柔攻X外星阴狠受的爆笑爱情XDDDDD。
+                </div>
+                <div class="o">
+                    <p class="oc1">分类：耽美 原创<span>|</span>文风：爆笑<span>|</span>主角：闫博阳，雷里福吉雅</p>
+                    <p class="oc2"><a href="#">下载</a><a href="#">编辑</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="t">
+                    <h3><a href="#">地球人同居手册</a><span>作者：弃妇A</span></h3>
+                    <span class="eva classic">经典</span>
+                </div>
+                <div class="d">
+                    一个外星阴狠受被父母打包扔上了前往愚昧无知、野蛮封建的文明未开化的星球──地球的旅游飞船，而随行的居然只有一本带有明显误导倾向的《地球人同居手册》！！<br>
+                    身为幼儿园老师的温柔攻X外星阴狠受的爆笑爱情XDDDDD。
+                </div>
+                <div class="o">
+                    <p class="oc1">分类：耽美 原创<span>|</span>文风：爆笑<span>|</span>主角：闫博阳，雷里福吉雅</p>
+                    <p class="oc2"><a href="#">下载</a><a href="#">编辑</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="t">
+                    <h3><a href="#">地球人同居手册</a><span>作者：弃妇A</span></h3>
+                    <span class="eva deleted">已删除</span>
+                </div>
+                <div class="d">
+                    一个外星阴狠受被父母打包扔上了前往愚昧无知、野蛮封建的文明未开化的星球──地球的旅游飞船，而随行的居然只有一本带有明显误导倾向的《地球人同居手册》！！<br>
+                    身为幼儿园老师的温柔攻X外星阴狠受的爆笑爱情XDDDDD。
+                </div>
+                <div class="o">
+                    <p class="oc1">分类：耽美 原创<span>|</span>文风：爆笑<span>|</span>主角：闫博阳，雷里福吉雅</p>
+                    <p class="oc2"><a href="#">下载</a><a href="#">编辑</a></p>
+                </div>
+            </li>
+        </ul>
+        <div class="pages">
+            <a class="apre" href="#">上一页</a>
+            <div class="sele">
+                <input type="text" class="text" value="200" readonly>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                </ul>
+            </div>
+            <a class="anext" href="#">下一页</a>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="footer">
+    <p class="fl">友情链接：<a href="">晋江</a><a href="">起点</a><a href="">饭饭</a><a href="">TXT之梦</a><a href="">紫蝶</a><a href="">爱去小说</a><a href="">书朋</a></p>
+    <p class="lr">Ava is reading... v1.0</p>
+</div>
+</body>
+</html>
