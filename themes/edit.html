@@ -9,7 +9,7 @@
 {template c_header.html}
 <div class="main_form">
     <h1>{$file['bname']}</h1>
-	<form action="edit.php" method="post" onSubmit="return checkFileForm()">
+	<form action="edit.php" method="post" id="editForm">
 		<input type="hidden" name="act" value="editInfo">
 		<input type="hidden" name="bid" value="{$bid}">
 		<table class="tbl">
@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<th>简介：</th>
-				<td colspan="2"><textarea class="area" name="bsummary" onblur="removeSpace(this)">{$file['bsummary']}</textarea></td>
+				<td colspan="2"><textarea class="area" name="bsummary">{$file['bsummary']}</textarea></td>
 			</tr>
 			<tr>
 				<th>主角：</th>
@@ -82,5 +82,9 @@
 	</form>
 </div>
 {template c_footer.html}
+{template c_script.html}
+<script>
+seajs.use('upload');
+</script>
 </body>
 </html>

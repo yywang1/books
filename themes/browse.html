@@ -10,7 +10,7 @@
 <div class="main_browse">
     <div class="sidebar">
         <section class="sbSearch">
-            <form action="{$WEB_ROOT}browse.php" method="get" id="filterForm" onSubmit="return checkFilterForm()">
+            <form action="{$WEB_ROOT}browse.php" method="get" id="filterForm">
                 <input type="hidden" name="act" value="sbfilter">
                 <div class="sele">
                     <input type="hidden" value="0" name="ftype">
@@ -34,7 +34,7 @@
             </form>
         </section>
 		<section class="sbSearch">
-            <form action="{$WEB_ROOT}browse.php" method="get" id="keyForm" onSubmit="return checkKeyForm()">
+            <form action="{$WEB_ROOT}browse.php" method="get" id="keyForm">
                 <input type="hidden" name="act" value="sbsearch">
                 <div class="sele">
                     <input type="hidden" value="0" name="sbfield">
@@ -68,7 +68,13 @@
             <li id="nov_{$file['bid']}">
 				<div class="t">
 					<h3><a href="{$WEB_ROOT}details.php?bid={$file['bid']}" target="_blank">{$file['bname']}</a><span>作者：{$file['bauthor']}</span></h3>
-					<p>热度：<span class="evaCount">{$file['beva']}</span> <span class="eva eva_0" title="喜欢" onclick="doLike({$file['bid']})"></span></p>
+					<p>热度：<span class="evaCount">{$file['beva']}</span>
+					<!--{if $file['iseva']}-->
+					<span class="eva eva_1" title="取消喜欢"></span>
+					<!--{else}-->
+					<span class="eva" title="喜欢"></span>
+					<!--{/if}-->
+					</p>
 				</div>
 				<div class="d">{$file['bsummary']}</div>
 				<div class="o">
@@ -83,7 +89,7 @@
 						<span>{$file['bsize']}</span>
 					</p>
 					<!--{if $file['bexist']}-->
-					<p class="oc2"><a href="{$WEB_ROOT}download.php?bid={$file['bid']}" target="_blank">下载</a><a href="{$WEB_ROOT}edit.php?bid={$file['bid']}">编辑</a><a href="javascript:void(0)" onclick="deleteFile('{$file['bid']}')">删除</a></p>
+					<p class="oc2"><a href="{$WEB_ROOT}download.php?bid={$file['bid']}" target="_blank">下载</a><a href="{$WEB_ROOT}edit.php?bid={$file['bid']}">编辑</a><a href="javascript:void(0)" class="btnDelFile">删除</a></p>
 					<!--{/if}-->
 				</div>
 			</li>
@@ -100,34 +106,9 @@
     </div>
 </div>
 {template c_footer.html} 
+{template c_script.html}
 <script>
-$(document).ready(function(){
-	$('input[name="sbkey"]').inputVal({str:'请输入关键字'});
-	
-})
-function checkKeyForm() {
-	var sbkey = $('input[name="sbkey"]').val();
-	if(sbkey == '请输入关键字' || sbkey == ' ') {
-		alert('请输入关键字');
-		return false;
-	}
-	return true;
-}
-function checkFilterForm() {
-	var isTrue = false;
-	$('#filterForm .sele input[type="hidden"]').each(function(index, element) {
-        if($(element).val() != 0) {
-			isTrue = true;
-		}
-    });
-	if(isTrue) {
-		return true;
-	} else {
-		alert('请选择筛选条件');
-		return false;
-	}
-	
-}
+seajs.use('browse');
 </script>
 </body>
 </html>
