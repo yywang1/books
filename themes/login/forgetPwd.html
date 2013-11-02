@@ -10,23 +10,23 @@
 <div class="main_form">
     <h1>找回密码</h1>
 	<div class="related"><a href="{$WEB_ROOT}login.php?back={$back}">快速登陆</a><a href="{$WEB_ROOT}login.php?act=toRegister&back={$back}">快速注册</a></div>
-	<form id="findPwdForm" onSubmit="return submitForm()">
+	<form id="findPwdForm" method="post">
 		<input type="hidden" name="act" value="">
 		<input type="hidden" name="vemail" value="">
 		<table class="tbl">
 			<tr>
 				<th width="80">邮 箱：<span class="required">*</span></th>
-				<td width="280"><input type="text" class="text" name="email" onblur="verifyEmailPwd()"></td>
+				<td width="280"><input type="text" class="text" name="email"></td>
 				<td><span id="emailTip" class="tip">注册时所填写的邮箱</span></td>
 			</tr>
 			<tr class="pwdtr" style="display:none">
 				<th>密码：<span class="required">*</span></th>
-				<td><input type="password" class="text" name="pwd" maxLength="16" onblur="verifyPwd(true)"></td>
+				<td><input type="password" class="text" name="pwd" maxLength="16"></td>
 				<td><span id="pwdTip" class="tip">由6-16位下划线、英文字母或数字组成</span></td>
 			</tr>
 			<tr class="pwdtr" style="display:none">
 				<th>确认密码：<span class="required">*</span></th>
-				<td><input type="password" class="text" name="repwd" maxLength="16" onblur="verifyRepwd(true)"></td>
+				<td><input type="password" class="text" name="repwd" maxLength="16"></td>
 				<td><span id="repwdTip" class="tip"></span></td>
 			</tr>
 			<tr>
@@ -36,68 +36,9 @@
 	</form>
 </div>
 {template ../c_footer.html}
-<script src="{$JS_PATH}user.js"></script>
+{template ../c_script.html}
 <script>
-function verifyEmailPwd() {
-	var email = $('input[name="email"]').val();
-	var vemail = $('input[name="vemail"]').val();
-	if((email == vemail) && (vemail != '')) {
-		$('#emailTip').addClass('suc').html('可用');
-		return true;
-	}
-	if(verifyEmail()) {
-		$.ajax({
-			type : 'POST',
-			url : WEB_ROOT + 'login.php',
-			dataType : 'text',
-			data : {
-				act : 'verifyEmail',
-				email : email
-			},
-			beforeSend : function () {
-				$('#emailTip').html(loading);
-			},
-			success : function (r) {
-				if (r) {
-					$('#emailTip').addClass('suc').html('正确');
-					$('.pwdtr').show();
-					$('input[name="act"]').val('findPwd');
-					$('input[name="vemail"]').val(email);
-				} else {
-					$('#emailTip').addClass('error').html('该邮箱未在网站注册过');
-				}
-			}
-		});
-		
-	}
-}
-function submitForm() {
-	if(verifyEmailPwd() && verifyPwd() && verifyRepwd()) {
-		var options = {
-			type: 'POST',
-			url: '{$WEB_ROOT}login.php',
-			dataType: 'text',
-			beforeSubmit: function() {
-				$('#submitTip').html(loading);
-				$('input[type="submit"]').attr('disabled', true);
-			},
-			success: function(r) {
-				if(r) {
-					$('#submitTip').addClass('suc').html('密码设置成功');
-					location.href = '{$WEB_ROOT}login.php?back={$back}';
-				} else {
-					$('#submitTip').addClass('error').html('设置失败，请重新提交');
-					$('input[type="submit"]').attr('disabled', false);
-					$(':input').focus(function() {
-						$('#submitTip').removeClass('error').removeClass('suc').html('');
-					});
-				}
-			}
-		};
-		$('#findPwdForm').ajaxSubmit(options);
-	}	
-	return false;
-}
+seajs.use('forgetPwd');
 </script>
 </body>
 </html>

@@ -11,8 +11,9 @@ define(function(require, exports, module) {
 	
 	//喜欢或取消喜欢
 	File.prototype.doLike = function() {
-		var bid = this.bid;
-		var container = this.container;
+		var nov = this;
+		var bid = nov.bid;
+		var container = nov.container;
 		$.ajax({
 			type: 'POST',
 			url: '../../../ajax.php',
@@ -30,7 +31,7 @@ define(function(require, exports, module) {
 					}
 					container.find('.evaCount').html(evaCount);
 				} else if(r.code == 1) {
-					location.href = '../../login.php?back=' + this.backUrl;
+					location.href = '../../login.php?back=' + nov.backUrl;
 				} else {
 					alert('操作失败！');
 				}

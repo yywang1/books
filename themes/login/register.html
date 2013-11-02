@@ -10,29 +10,29 @@
 <div class="main_form">
     <h1>新用户注册</h1>
 	<div class="related"><a href="{$WEB_ROOT}login.php?back={$back}">快速登陆</a><a href="{$WEB_ROOT}login.php?act=toFindPwd&back={$back}">找回密码</a></div>
-	<form id="regForm" onSubmit="return submitForm()">
+	<form id="regForm" method="post">
 		<input type="hidden" name="act" value="register">
 		<input type="hidden" name="vname" value="">
 		<input type="hidden" name="vemail" value="">
 		<table class="tbl">
 			<tr>
 				<th width="80">用户名：<span class="required">*</span></th>
-				<td width="280"><input type="text" class="text" name="name" maxLength="10" onblur="verifyNameReg()"></td>
+				<td width="280"><input type="text" class="text" name="name" maxLength="10"></td>
 				<td><span id="nameTip" class="tip">由3-10位英文字母或数字组成</span></td>
 			</tr>
 			<tr>
 				<th>邮箱：<span class="required">*</span></th>
-				<td><input type="text" class="text" name="email" onblur="verifyEmailReg()"></td>
+				<td><input type="text" class="text" name="email"></td>
 				<td><span id="emailTip" class="tip">通过邮箱，网站将不定期发放福利；找回密码</span></td>
 			</tr>
 			<tr>
 				<th>密码：<span class="required">*</span></th>
-				<td><input type="password" class="text" name="pwd" maxLength="16" onblur="verifyPwd(true)"></td>
+				<td><input type="password" class="text" name="pwd" maxLength="16"></td>
 				<td><span id="pwdTip" class="tip">由6-16位下划线、英文字母或数字组成</span></td>
 			</tr>
 			<tr>
 				<th>确认密码：<span class="required">*</span></th>
-				<td><input type="password" class="text" name="repwd" maxLength="16" onblur="verifyRepwd(true)"></td>
+				<td><input type="password" class="text" name="repwd" maxLength="16"></td>
 				<td><span id="repwdTip" class="tip"></span></td>
 			</tr>			
 			<tr>
@@ -42,58 +42,9 @@
 	</form>
 </div>
 {template ../c_footer.html}
-<script src="{$JS_PATH}user.js"></script>
+{template ../c_script.html}
 <script>
-function verifyNameReg() {
-	var name = $('input[name="name"]').val();
-	var vname = $('input[name="vname"]').val();
-	if((name == vname) && (vname != '')) {
-		$('#nameTip').addClass('suc').html('可用');
-		return true;
-	}
-	if(verifyName(true)) {
-		$('input[name="vname"]').val(name);
-	}
-}
-function verifyEmailReg() {
-	var email = $('input[name="email"]').val();
-	var vemail = $('input[name="vemail"]').val();
-	if((email == vemail) && (vemail != '')) {
-		$('#emailTip').addClass('suc').html('可用');
-		return true;
-	}
-	if(verifyEmail(true)) {
-		$('input[name="vemail"]').val(email);
-	}
-}
-function submitForm() {
-	if(verifyNameReg() && verifyEmailReg() && verifyPwd() && verifyRepwd()) {
-		var options = {
-			type: 'POST',
-			url: '{$WEB_ROOT}login.php?back={$back}',
-			dataType: 'json',
-			beforeSubmit: function() {
-				$('#submitTip').html(loading);
-				$('input[type="submit"]').attr('disabled', true);
-			},
-			success: function(r) {
-				if(r.code == 0) {
-					$('#submitTip').addClass('suc').html('注册成功');
-					location.href = r.back;
-				} else {
-					$('#submitTip').html('注册失败，请重新填写').addClass('error');
-					$('input[type="submit"]').attr('disabled', false);
-					$(':input').focus(function() {
-						$('#submitTip').removeClass('error').removeClass('suc').html('');
-					});
-				}
-			}
-		};
-		$('#regForm').ajaxSubmit(options);
-	}	
-	return false;
-}
-
+seajs.use('register');
 </script>
 </body>
 </html>
