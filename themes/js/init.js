@@ -1,7 +1,6 @@
 define(function(require, exports, module) {	
 
 	var $ = require('jquery');
-	var gb = require('mod/global');
 	
 	//喜欢
 	$('.eva').click(function() {
