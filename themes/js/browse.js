@@ -8,16 +8,16 @@ define(function(require, exports, module) {
 	sbkey.init();
 		
 	//表单验证
-	var FormCheck = require('mod/formCheck');
+	var fc = require('mod/formCheck');
 	
 	$('#filterForm').submit(function() {
-		if(! FormCheck.checkFilterForm()) {
+		if(! fc.checkFilterForm()) {
 			return false;
 		}
 	});
 	
 	$('#keyForm').submit(function() {
-		if(! FormCheck.checkKeyForm()) {
+		if(! fc.checkKeyForm()) {
 			return false;
 		}
 	});

@@ -2,8 +2,7 @@ define(function(require, exports, module) {
 
 	var $ = require('jquery');
 	var Verify = require('mod/verify');
-	var ve = new Verify();
-	
+	var ve = new Verify();	
 	
 	$('input[name="email"]').blur(function() {
 		ve.verifyEmailPwd();
@@ -17,12 +16,12 @@ define(function(require, exports, module) {
 		ve.verifyRepwd(true);
 	});
 	
+	require('jqueryForm');
+	var gp = require('mod/getParam');
+	var backUrl = gp.getParamVal('back');
+
 	$('#findPwdForm').submit(function() {
 		if(ve.verifyEmailPwd() && ve.verifyPwd() && ve.verifyRepwd()) {
-			require('jqueryForm');
-			var gp = require('mod/getParam');
-			var backUrl = gp.getParamVal('back');
-			
 			var options = {
 				type: 'POST',
 				url: '../../login.php',

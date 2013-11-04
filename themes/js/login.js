@@ -2,8 +2,7 @@ define(function(require, exports, module) {
 
 	var $ = require('jquery');
 	var Verify = require('mod/verify');
-	var ve = new Verify();
-	
+	var ve = new Verify();	
 	
 	$('input[name="name"]').blur(function() {
 		ve.verifyName();
@@ -13,12 +12,13 @@ define(function(require, exports, module) {
 		ve.verifyPwd();
 	});
 	
+	
+	require('jqueryForm');
+	var gp = require('mod/getParam');
+	var backUrl = gp.getParamVal('back');
+	
 	$('#loginForm').submit(function() {
-		if(ve.verifyName() && ve.verifyPwd()) {			
-			require('jqueryForm');
-			var gp = require('mod/getParam');
-			var backUrl = gp.getParamVal('back');
-			
+		if(ve.verifyName() && ve.verifyPwd()) {
 			var options = {
 				type: 'POST',
 				url: '../../login.php?back=' + backUrl,

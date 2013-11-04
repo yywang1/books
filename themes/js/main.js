@@ -6,24 +6,31 @@ define(function(require, exports, module) {
 	$('.eva').click(function() {
 		var liId = $(this).parents('li').attr('id');
 		var bid = parseInt(liId.replace('nov_', ''));
-		var File = require('mod/file')
-		var File = new File(bid);
-		File.doLike();
+		require.async(['mod/file'], function(File) {
+			var f = new File(bid);
+			f.doLike();
+		});
+		
 	});
 	
 	//删除文件
 	$('.btnDelFile').click(function() {
 		var liId = $(this).parents('li').attr('id');
 		var bid = parseInt(liId.replace('nov_', ''));
-		var File = require('mod/file')
-		var File = new File(bid);
-		File.doDelete();
+		require.async(['mod/file'], function(File) {
+			var f = new File(bid);
+			f.doDelete();
+		});
 	});
 	
 	//下拉框
-	require('mod/selectWidget');
-	$('.sele').each(function () {
-		$(this).selectWidget();
-	});
+	if($('.sele').length > 0) {
+		require.async(['mod/selectWidget'], function() {
+			$('.sele').each(function () {
+				$(this).selectWidget();
+			});
+		});
+	}
+		
 });
 
