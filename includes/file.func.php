@@ -157,7 +157,7 @@ function updateFileById($bid, $file) {
 
 function deleteOne($bid) {
 	$db = $GLOBALS['db'];
-	$sql_update = "UPDATE books SET beva=1 WHERE bid=$bid";
+	$sql_update = "UPDATE books SET bexist=0 WHERE bid=$bid";
 	return $db->query($sql_update);
 }
 
