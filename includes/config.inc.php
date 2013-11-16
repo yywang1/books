@@ -24,7 +24,7 @@ if ($_SERVER['DOCUMENT_ROOT'] != "") {
 } else {
     $WEB_ROOT = "/";
 }
-$theme = $WEB_ROOT . 'themes/default/';
+$theme = $WEB_ROOT . 'themes/standard/';
 $CSS_PATH = $theme . 'css/';
 $JS_PATH = $theme . 'js/';
 $IMG_PATH = $theme . 'images/';

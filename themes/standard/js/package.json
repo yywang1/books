@@ -1,0 +1,22 @@
+{
+  "family": "custom",
+  "name": "global",
+  "version": "0.0.1",
+  "spm": {
+    "alias": {
+	  "$": "jquery/jquery/1.10.1/jquery"
+    },
+	"output": {
+		"global.js":[
+			"main.js",
+			"index.js",
+			"batchUpload.js",
+			"browse.js",
+			"forgetPwd.js",
+			"login.js",
+			"register.js",
+			"upload.js"
+		]
+	}
+  }
+}
