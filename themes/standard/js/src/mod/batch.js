@@ -2,12 +2,13 @@ define(function(require, exports, module) {
 
 	var $ = require('$');
 	require('../lib/jqueryForm');
+	require('../mod/selectWidget');
 	
 	function Batch() {}	
 	module.exports = Batch;
 	
 	Batch.prototype.showLoading = function(str) {
-		$('.main_form').append('<div class="fileList"><img src="themes/images/loading.gif" width="16" height="16" class="loading">' + str + '</div>');	
+		$('.main_form').append('<div class="fileList"><img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">' + str + '</div>');	
 	};
 	
 	Batch.prototype.hideLoading = function() {

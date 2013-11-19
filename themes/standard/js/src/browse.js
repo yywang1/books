@@ -2,6 +2,12 @@ define(function(require, exports, module) {
 
 	var $ = require('$');
 	
+	//下拉框
+	require('./mod/selectWidget');
+	$('.sele').each(function () {
+		$(this).selectWidget();
+	});
+	
 	//关键字搜索输入框
 	var InputVal = require('./mod/inputVal');
 	var sbkey = new InputVal('input[name="sbkey"]', '请输入关键字');

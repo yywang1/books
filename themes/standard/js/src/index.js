@@ -9,14 +9,6 @@ define(function(require, exports, module) {
 		var bid = parseInt(liId.replace('nov_', ''));
 		var f = new File(bid);
 		f.doLike();
-		/*
-		require.async(['./mod/file']
-		, function(File) {
-			var f = new File(bid);
-			f.doLike();
-		});
-		*/
-		
 	});
 	
 	//删除文件
@@ -24,13 +16,7 @@ define(function(require, exports, module) {
 		var liId = $(this).parents('li').attr('id');
 		var bid = parseInt(liId.replace('nov_', ''));
 		var f = new File(bid);
-		f.doLike();
-		/*
-		require.async(['./mod/file'], function(File) {
-			var f = new File(bid);
-			f.doDelete();
-		});
-		*/
+		f.doDelete();
 	});
 		
 });

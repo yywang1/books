@@ -56,6 +56,7 @@ define(function(require, exports, module) {
 		var initStr = (obj && obj.str) ? obj.str : '-';
 		$hidden.val(initVal);
 		$text.html(initStr);
+		$sele.selectWidget();
 	};
 	
 });

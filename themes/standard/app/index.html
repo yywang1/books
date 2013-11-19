@@ -50,7 +50,13 @@
 {template c_footer.html}
 {template c_script.html}
 <script>
-	seajs.use((seajs.production ? '' : '/themes/default/js/') + 'custom/{$file_name}');
+<!--{if $isLocal}-->	
+	seajs.use('loc/index');
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/index']);
+	})
+<!--{/if}-->
 </script>
 </body>
 </html>

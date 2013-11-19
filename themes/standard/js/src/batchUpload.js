@@ -8,8 +8,9 @@ define(function(require, exports, module) {
 		bu.verifyDir();
 	});
 
-	$('#btnBatchUpload').click(function() {
+	$('#buForm').submit(function() {
 		bu.doBatchUpload();
+		return false;
 	});	
 	
 });

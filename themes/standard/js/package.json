@@ -1,5 +1,5 @@
 {
-  "family": "custom",
+  "family": "global",
   "name": "global",
   "version": "0.0.1",
   "spm": {
@@ -8,7 +8,6 @@
     },
 	"output": {
 		"global.js":[
-			"main.js",
 			"index.js",
 			"batchUpload.js",
 			"browse.js",

@@ -5,6 +5,10 @@ $db_user = "root";
 $db_pass = "root";
 $db_name = "myread";
 
+// For development or For production
+$isLocal = strpos($_SERVER['HTTP_HOST'], 'loc') === false ? false : true;
+$isLocal = false;
+
 // encoding
 header("Content-type: text/html; Charset=utf-8");
 

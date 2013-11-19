@@ -104,7 +104,13 @@
 {template c_footer.html}
 {template c_script.html}
 <script>
-
+<!--{if $isLocal}-->	
+	seajs.use('loc/upload');
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/upload']);
+	})
+<!--{/if}-->
 </script>
 </body>
 </html>

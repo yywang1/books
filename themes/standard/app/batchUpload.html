@@ -47,7 +47,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3"><input class="btn1" id="btnBatchUpload" type="button" value="上  传"></td>
+					<td colspan="3"><input class="btn1" id="btnBatchUpload" type="submit" value="上  传"></td>
 				</tr>
             </table>
 		</div>
@@ -56,7 +56,13 @@
 {template c_footer.html}
 {template c_script.html}
 <script>
-	seajs.use((seajs.production ? '' : '/themes/default/js/') + 'custom/{$file_name}');
+<!--{if $isLocal}-->	
+	seajs.use('loc/batchUpload');
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/batchUpload']);
+	})
+<!--{/if}-->
 </script>
 </body>
 </html>

@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 				url: '../../login.php?back=' + backUrl,
 				dataType: 'json',
 				beforeSubmit: function() {
-					$('#submitTip').html('<img src="themes/images/loading.gif" width="16" height="16" class="loading">');
+					$('#submitTip').html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
 					$('input[type="submit"]').attr('disabled', true);
 				},
 				success: function(r) {

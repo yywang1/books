@@ -40,7 +40,7 @@ define(function(require, exports, module) {
 					name : nameVal
 				},
 				beforeSend : function () {
-					nameTip.html('<img src="themes/images/loading.gif" width="16" height="16" class="loading">');
+					nameTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
 					if (r) {
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 					email : emailVal
 				},
 				beforeSend : function () {
-					emailTip.html('<img src="themes/images/loading.gif" width="16" height="16" class="loading">');
+					emailTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
 					if (r) {
@@ -163,33 +163,39 @@ define(function(require, exports, module) {
 		}
 	};
 	
-	Verify.prototype.verifyEmailPwd = function() {
-		var emailVal = this.email.val();
-		var vemailVal = $('input[name="vemail"]').val();
-		if((emailVal == vemailVal) && (vemailVal != '')) {
-			$('#emailTip').addClass('suc').html('可用');
-			return true;
-		}
-		if(this.verifyEmail()) {
+	Verify.prototype.verifyNameAndEmail = function() {
+		if(this.verifyName() && this.verifyEmail()) {
+			var name = this.name;
+			var nameVal = this.name.val();
+			var nameTip = this.nameTip;		
+			var email = this.email;
+			var emailVal = this.email.val();
+			var emailTip = this.emailTip;
 			$.ajax({
 				type : 'POST',
 				url : '../../../login.php',
-				dataType : 'text',
+				dataType : 'json',
 				data : {
-					act : 'verifyEmail',
+					act : 'verifyNameAndEmail',
+					name: nameVal,
 					email : emailVal
 				},
 				beforeSend : function () {
-					$('#emailTip').html('<img src="themes/images/loading.gif" width="16" height="16" class="loading">');
+					$('.submitTip').html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
-					if (r) {
+					$('.submitTip').html('');
+					if (r.code == 0) {
+						$('#nameTip').addClass('suc').html('正确');
+						name.attr('readonly', true)
 						$('#emailTip').addClass('suc').html('正确');
+						email.attr('readonly', true)
 						$('.pwdtr').show();
 						$('input[name="act"]').val('findPwd');
-						$('input[name="vemail"]').val(emailVal);
+					} else if(r.code == 1) {
+						emailTip.addClass('error').html('邮箱错误');
 					} else {
-						$('#emailTip').addClass('error').html('该邮箱未在网站注册过');
+						nameTip.addClass('error').html('该用户不存在');
 					}
 				}
 			});
