@@ -7,7 +7,7 @@ $db_name = "myread";
 
 // For development or For production
 $isLocal = strpos($_SERVER['HTTP_HOST'], 'loc') === false ? false : true;
-$isLocal = false;
+#$isLocal = false;
 
 // encoding
 header("Content-type: text/html; Charset=utf-8");
@@ -28,17 +28,21 @@ if ($_SERVER['DOCUMENT_ROOT'] != "") {
 } else {
     $WEB_ROOT = "/";
 }
-$theme = $WEB_ROOT . 'themes/standard/';
-$CSS_PATH = $theme . 'css/';
-$JS_PATH = $theme . 'js/';
-$IMG_PATH = $theme . 'images/';
+
+$theme = 'standard';
+$theme = 'seajs_custom';
+
+$theme_path = $WEB_ROOT . 'themes/' . $theme . '/';
+$CSS_PATH = $theme_path . 'css/';
+$JS_PATH = $theme_path . 'js/';
+$IMG_PATH = $theme_path . 'images/';
 $selfurl = $_SERVER['PHP_SELF']; 
 $file_name_with_postfix = substr($selfurl, strrpos($selfurl , '/')+1);  
 $file_name = str_replace('.php', '', $file_name_with_postfix);
 
 //Zandy / PHP-TEMPLATE-ENGINE
 $siteConf['tplBaseDir'] = ROOT_PATH; //D:/zwnmp/web/test/books/
-$siteConf['tplDir'] = ROOT_PATH . $theme . 'app/';
+$siteConf['tplDir'] = ROOT_PATH . 'themes/' . $theme . '/app/';
 $siteConf['cacheDir'] = ROOT_PATH . 'templates/';
 $siteConf['tplCacheBaseDir'] = ROOT_PATH . 'templates/';
 $siteConf['forceRefreshCache'] = false;
