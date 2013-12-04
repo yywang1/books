@@ -7,7 +7,10 @@ $db_name = "myread";
 
 // For development or For production
 $isLocal = strpos($_SERVER['HTTP_HOST'], 'loc') === false ? false : true;
-#$isLocal = false;
+$isLocal = false;
+
+$theme = 'standard';
+#$theme = 'seajs_custom';
 
 // encoding
 header("Content-type: text/html; Charset=utf-8");
@@ -28,9 +31,6 @@ if ($_SERVER['DOCUMENT_ROOT'] != "") {
 } else {
     $WEB_ROOT = "/";
 }
-
-$theme = 'standard';
-$theme = 'seajs_custom';
 
 $theme_path = $WEB_ROOT . 'themes/' . $theme . '/';
 $CSS_PATH = $theme_path . 'css/';
