@@ -1,7 +1,7 @@
 //输入框友好提示
 define(function(require, exports, module) {
 
-	var $ = require('$');
+	var $ = require('../lib/jquery');
 	
 	function InputVal(container, tip) {
 		 this.container = $(container);

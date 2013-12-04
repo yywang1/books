@@ -1,6 +1,6 @@
 // JavaScript Document
 define(function(require, exports, module) {
-	var $ = require('$');
+	var $ = require('../lib/jquery');
 	require('../lib/jqueryForm');
 
 	function Verify() {

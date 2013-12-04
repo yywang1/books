@@ -1,6 +1,6 @@
 define(function(require, exports, module) {	
 
-	var $ = require('$');
+	var $ = require('./lib/jquery');
 	var File = require('./mod/file');
 	
 	//喜欢

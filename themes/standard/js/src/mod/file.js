@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-	var $ = require('$');
+	var $ = require('../lib/jquery');
 	
 	function File(bid) {
 		 this.bid = parseInt(bid);

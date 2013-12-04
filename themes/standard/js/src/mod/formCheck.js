@@ -1,7 +1,7 @@
 //表单验证
 define(function(require, exports, module) {
 
-	var $ = require('$');
+	var $ = require('../lib/jquery');
 	
 	module.exports.checkKeyForm = function() {
 		var sbkey = $('input[name="sbkey"]').val();
