@@ -8674,14 +8674,12 @@ define("global/global/0.0.1/mod/selectWidget-debug", [ "global/global/0.0.1/lib/
                 $text.html($(this).html());
                 $hidden.val($(this).index());
             }
-            $menu.hide();
-            $sele.css("z-index", "0");
+            $sele.removeClass("active");
             $(document).unbind("click", hideMenu);
         });
         var showMenu = function() {
-            $(".sele").css("z-index", "0").find("ul").hide();
-            $sele.css("z-index", "1");
-            $menu.show();
+            $(".sele").removeClass("active");
+            $sele.addClass("active");
             $(document).bind("click", hideMenu);
         };
         var hideMenu = function(e) {
@@ -8690,8 +8688,7 @@ define("global/global/0.0.1/mod/selectWidget-debug", [ "global/global/0.0.1/lib/
                 if ($(src).closest(".sele").length > 0) return;
                 src = src.parentNode;
             } while (src.parentNode);
-            $menu.hide();
-            $sele.css("z-index", "0");
+            $sele.removeClass("active");
             $(document).unbind("click", hideMenu);
         };
     };
@@ -8708,7 +8705,7 @@ define("global/global/0.0.1/mod/selectWidget-debug", [ "global/global/0.0.1/lib/
     };
 });
 
-define("global/global/0.0.1/browse-debug", [ "./lib/jquery-debug", "./mod/selectWidget-debug", "./mod/inputVal-debug", "./mod/formCheck-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/browse-debug", [ "./lib/jquery-debug", "./mod/selectWidget-debug", "./mod/inputVal-debug", "./mod/formCheck-debug", "./mod/file-debug" ], function(require, exports, module) {
     var $ = require("./lib/jquery-debug");
     //下拉框
     require("./mod/selectWidget-debug");
@@ -8730,6 +8727,21 @@ define("global/global/0.0.1/browse-debug", [ "./lib/jquery-debug", "./mod/select
         if (!fc.checkKeyForm()) {
             return false;
         }
+    });
+    var File = require("./mod/file-debug");
+    //喜欢
+    $(".eva").click(function() {
+        var liId = $(this).parents("li").attr("id");
+        var bid = parseInt(liId.replace("nov_", ""));
+        var f = new File(bid);
+        f.doLike();
+    });
+    //删除文件
+    $(".btnDelFile").click(function() {
+        var liId = $(this).parents("li").attr("id");
+        var bid = parseInt(liId.replace("nov_", ""));
+        var f = new File(bid);
+        f.doDelete();
     });
 });
 

@@ -22,6 +22,15 @@
 	position: relative;
 	z-index: 0;
 	vertical-align: middle;
+	&.active {
+		z-index: 1;
+		span {
+			border-color: @active-border-color; 
+		}
+		ul {
+			display: block;
+		}
+	}
 	span {
 		.base-input;
 		height: 18px;
@@ -39,7 +48,7 @@
 		position: absolute;
 		top: 29px;
 		left: 0;
-		border: solid 1px #96b2d2;
+		border: solid 1px @active-border-color;
 		display: none;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -47,7 +56,7 @@
 			height: 24px;
 			line-height: 24px;
 			white-space: nowrap;
-			border-top: solid 1px #96b2d2;
+			border-top: solid 1px @active-border-color;
 			background: #f4faff;
 			color: #13273f;
 			padding: 0 9px;

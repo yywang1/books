@@ -22,15 +22,13 @@ define(function(require, exports, module) {
 				$text.html($(this).html());
 				$hidden.val($(this).index());
 			}
-			$menu.hide();
-			$sele.css('z-index', '0');
+			$sele.removeClass('active');
 			$(document).unbind('click', hideMenu);
 		});
 
 		var showMenu = function () {
-			$('.sele').css('z-index', '0').find('ul').hide();
-			$sele.css('z-index', '1');
-			$menu.show();
+			$('.sele').removeClass('active');
+			$sele.addClass('active');
 			$(document).bind('click', hideMenu);
 		};
 
@@ -42,8 +40,7 @@ define(function(require, exports, module) {
 				src = src.parentNode;
 			} while (src.parentNode)
 
-			$menu.hide();
-			$sele.css('z-index', '0');
+			$sele.removeClass('active');
 			$(document).unbind('click', hideMenu);
 		};
 	};
