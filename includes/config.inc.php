@@ -6,11 +6,12 @@ $db_pass = "root";
 $db_name = "myread";
 
 // For development or For production
-$isLocal = strpos($_SERVER['HTTP_HOST'], 'loc') === false ? false : true;
-$isLocal = false;
+$GLOBALS['JS_DEBUG'] = false;
 
-$theme = 'standard';
-#$theme = 'seajs_custom';
+//default        - seajs and lesscss
+//seajs_standard - standard seajs without lesscss
+//seajs_custom   - customseajs without lesscss
+$theme = 'default';
 
 // encoding
 header("Content-type: text/html; Charset=utf-8");
