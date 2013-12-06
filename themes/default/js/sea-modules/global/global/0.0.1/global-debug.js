@@ -8662,8 +8662,9 @@ define("global/global/0.0.1/mod/selectWidget-debug", [ "global/global/0.0.1/lib/
         var $text = $(this).children("span");
         var $hidden = $(this).children('input[type="hidden"]');
         var $menu = $(this).children("ul");
+        var liHeight = $menu.children("li:eq(1)").outerHeight();
         if ($menu.children("li").length > 10) {
-            $menu.height(250);
+            $menu.height(liHeight * 10 - 1);
         }
         $text.mousedown(function() {
             showMenu();

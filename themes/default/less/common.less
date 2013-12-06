@@ -36,11 +36,10 @@
 		font-size: 14px;
 	}
 	ul {
-		width: 100%;
 		position: absolute;
 		top: 29px;
 		left: 0;
-		border-top: solid 1px #96b2d2;
+		border: solid 1px #96b2d2;
 		display: none;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -48,13 +47,15 @@
 			height: 24px;
 			line-height: 24px;
 			white-space: nowrap;
-			border: solid 1px #96b2d2;
-			border-top: none;
+			border-top: solid 1px #96b2d2;
 			background: #f4faff;
 			color: #13273f;
 			padding: 0 9px;
 			font-size: 14px;
 			cursor: pointer;
+			&:first-child{
+				border-top: none;
+			}
 			&:hover {
 				background: #e7f2ff;
 			}
@@ -66,6 +67,15 @@
 				}
 			}		
 		}
+	}
+}
+.seleWidth(@width:200px) {
+	width: @width;
+	span {
+		width: @width - 40;
+	}
+	ul {
+		width: @width - 2;
 	}
 }
 .area {

@@ -59,11 +59,10 @@
   font-size: 14px;
 }
 .sele ul {
-  width: 100%;
   position: absolute;
   top: 29px;
   left: 0;
-  border-top: solid 1px #96b2d2;
+  border: solid 1px #96b2d2;
   display: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -72,13 +71,15 @@
   height: 24px;
   line-height: 24px;
   white-space: nowrap;
-  border: solid 1px #96b2d2;
-  border-top: none;
+  border-top: solid 1px #96b2d2;
   background: #f4faff;
   color: #13273f;
   padding: 0 9px;
   font-size: 14px;
   cursor: pointer;
+}
+.sele ul li:first-child {
+  border-top: none;
 }
 .sele ul li:hover {
   background: #e7f2ff;
@@ -666,7 +667,9 @@ body {
 }
 .sbSearch .sele span {
   width: 108px;
-  margin-top: 0;
+}
+.sbSearch .sele ul {
+  width: 146px;
 }
 .sbSearch .btn5 {
   margin-top: 12px;
@@ -771,6 +774,9 @@ body {
 }
 .pages .sele span {
   width: 30px;
+}
+.pages .sele ul {
+  width: 68px;
 }
 .pages .sele ul {
   top: auto;
