@@ -42,7 +42,7 @@
 {template ../c_footer.html}
 {template ../c_script.html}
 <script>
-<!--{if $isLocal}-->	
+<!--{if $GLOBALS['JS_DEBUG']}-->	
 	seajs.use('loc/forgetPwd');
 <!--{else}-->
 	seajs.use('global', function () {

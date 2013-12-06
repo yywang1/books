@@ -6,7 +6,7 @@
 			'sea' : '{$JS_PATH}sea-modules',
 			'loc' : '{$JS_PATH}src'
 		},
-		<!--{if ! $isLocal}-->
+		<!--{if ! $GLOBALS['JS_DEBUG']}-->
 		alias: {
 			'global': 'sea/global/global/0.0.1/global'
 		}

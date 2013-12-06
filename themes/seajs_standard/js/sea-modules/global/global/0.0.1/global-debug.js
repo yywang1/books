@@ -7413,7 +7413,7 @@ define("global/global/0.0.1/mod/file-debug", [ "global/global/0.0.1/lib/jquery-d
     };
 });
 
-define("global/global/0.0.1/batchUpload-debug", [ "./lib/jquery-debug", "./mod/batch-debug", "./lib/jqueryForm-debug", "$-debug", "./mod/selectWidget-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/batchUpload-debug", [ "./lib/jquery-debug", "./mod/batch-debug", "./lib/jqueryForm-debug", "./mod/selectWidget-debug" ], function(require, exports, module) {
     var $ = require("./lib/jquery-debug");
     var Batch = require("./mod/batch-debug");
     var bu = new Batch();
@@ -7426,7 +7426,7 @@ define("global/global/0.0.1/batchUpload-debug", [ "./lib/jquery-debug", "./mod/b
     });
 });
 
-define("global/global/0.0.1/mod/batch-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug", "$-debug", "global/global/0.0.1/mod/selectWidget-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/mod/batch-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug", "global/global/0.0.1/mod/selectWidget-debug" ], function(require, exports, module) {
     var $ = require("global/global/0.0.1/lib/jquery-debug");
     require("global/global/0.0.1/lib/jqueryForm-debug");
     require("global/global/0.0.1/mod/selectWidget-debug");
@@ -7592,8 +7592,8 @@ define("global/global/0.0.1/mod/batch-debug", [ "global/global/0.0.1/lib/jquery-
     };
 });
 
-define("global/global/0.0.1/lib/jqueryForm-debug", [ "$-debug" ], function(require, exports, module) {
-    var $ = require("$-debug");
+define("global/global/0.0.1/lib/jqueryForm-debug", [ "global/global/0.0.1/lib/jquery-debug" ], function(require, exports, module) {
+    var $ = require("global/global/0.0.1/lib/jquery-debug");
     (function($) {
         "use strict";
         /*
@@ -8825,7 +8825,7 @@ define("global/global/0.0.1/mod/formCheck-debug", [ "global/global/0.0.1/lib/jqu
     };
 });
 
-define("global/global/0.0.1/forgetPwd-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "$-debug", "./mod/getParam-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/forgetPwd-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "./mod/getParam-debug" ], function(require, exports, module) {
     var $ = require("./lib/jquery-debug");
     var Verify = require("./mod/verify-debug");
     var ve = new Verify();
@@ -8879,7 +8879,7 @@ define("global/global/0.0.1/forgetPwd-debug", [ "./lib/jquery-debug", "./mod/ver
 });
 
 // JavaScript Document
-define("global/global/0.0.1/mod/verify-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug", "$-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/mod/verify-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug" ], function(require, exports, module) {
     var $ = require("global/global/0.0.1/lib/jquery-debug");
     require("global/global/0.0.1/lib/jqueryForm-debug");
     function Verify() {
@@ -9086,7 +9086,7 @@ define("global/global/0.0.1/mod/getParam-debug", [], function(require, exports, 
     };
 });
 
-define("global/global/0.0.1/login-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "$-debug", "./mod/getParam-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/login-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "./mod/getParam-debug" ], function(require, exports, module) {
     var $ = require("./lib/jquery-debug");
     var Verify = require("./mod/verify-debug");
     var ve = new Verify();
@@ -9131,7 +9131,7 @@ define("global/global/0.0.1/login-debug", [ "./lib/jquery-debug", "./mod/verify-
     });
 });
 
-define("global/global/0.0.1/register-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "$-debug", "./mod/getParam-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/register-debug", [ "./lib/jquery-debug", "./mod/verify-debug", "./lib/jqueryForm-debug", "./mod/getParam-debug" ], function(require, exports, module) {
     var $ = require("./lib/jquery-debug");
     var Verify = require("./mod/verify-debug");
     var ve = new Verify();
@@ -9179,7 +9179,7 @@ define("global/global/0.0.1/register-debug", [ "./lib/jquery-debug", "./mod/veri
     });
 });
 
-define("global/global/0.0.1/upload-debug", [ "./lib/jquery-debug", "./mod/verifyAtta-debug", "./lib/jqueryForm-debug", "$-debug", "./mod/selectWidget-debug", "./mod/formCheck-debug" ], function(require, exports, modulselectWidgete) {
+define("global/global/0.0.1/upload-debug", [ "./lib/jquery-debug", "./mod/verifyAtta-debug", "./lib/jqueryForm-debug", "./mod/selectWidget-debug", "./mod/formCheck-debug" ], function(require, exports, modulselectWidgete) {
     var $ = require("./lib/jquery-debug");
     //点击Choose File按钮回复原始状态
     $("#attachment").mousedown(function() {
@@ -9212,7 +9212,7 @@ define("global/global/0.0.1/upload-debug", [ "./lib/jquery-debug", "./mod/verify
     });
 });
 
-define("global/global/0.0.1/mod/verifyAtta-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug", "$-debug" ], function(require, exports, module) {
+define("global/global/0.0.1/mod/verifyAtta-debug", [ "global/global/0.0.1/lib/jquery-debug", "global/global/0.0.1/lib/jqueryForm-debug" ], function(require, exports, module) {
     var $ = require("global/global/0.0.1/lib/jquery-debug");
     require("global/global/0.0.1/lib/jqueryForm-debug");
     function VerifyAtta() {}

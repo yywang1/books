@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-	var $ = require('$');
+	var $ = require('./jquery');
 	
 	/*!
 	 * jQuery Form Plugin
