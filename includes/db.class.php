@@ -1,5 +1,6 @@
 <?php
-include_once __DIR__ . '/config.inc.php';
+include_once __DIR__ . '/config.init.php';
+include_once __DIR__ . '/config.vars.php';
 
 class Db {
 	var $link_id = NULL;

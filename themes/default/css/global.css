@@ -995,14 +995,14 @@ body {
 .articlePreview h3.deleted {
   color: #444;
 }
-.articlePreview h3 p {
+.articlePreview p {
   margin-bottom: 10px;
   text-indent: 2em;
   font-size: 14px;
   line-height: 26px;
   color: #333;
 }
-.articlePreview h3 .goOn {
+.articlePreview .goOn {
   text-align: center;
   background: #f7f7f7;
   padding: 10px;

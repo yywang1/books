@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/config.inc.php';
+include_once __DIR__ . '/config.init.php';
 
 function insertUser($user) {
 	$regMoney = 3; //注册时获取的财富

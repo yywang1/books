@@ -1,5 +1,4 @@
 <?
-include_once __DIR__ . '/includes/config.inc.php';
 include_once __DIR__ . '/includes/file.func.php';
 
 $bid = isset($_REQUEST['bid']) && $_REQUEST['bid'] ? intval($_REQUEST['bid']) : 0;

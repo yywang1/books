@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/config.inc.php';
+include_once __DIR__ . '/config.init.php';
 
 function p() {
 	$argvs = func_get_args();

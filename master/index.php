@@ -1,5 +1,5 @@
 <?
-include_once __DIR__ . '../../includes/config.inc.php';
+include_once __DIR__ . '../../includes/config.init.php';
 
 $indexFiles = array();
 $indexIdsRes = $db->query("SELECT bid FROM books WHERE beva != 1 ORDER BY bdate DESC LIMIT 5");

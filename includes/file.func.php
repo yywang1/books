@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/config.inc.php';
+include_once __DIR__ . '/config.init.php';
 
 function getFileById($bid) {
 	$db = $GLOBALS['db'];
@@ -36,6 +36,19 @@ function getFileById($bid) {
 		}
 	}
 	return $file;
+}
+
+function getFileList($sqlToGetIds) {
+	$db = $GLOBALS['db'];
+	$bids = $db->getIds($sqlToGetIds);
+
+	$fileList = array();
+	foreach($bids as $bid) {
+		$file = getFileById($bid);
+		$file['bsummary'] = dataToHtml($file['bsummary']);
+		$fileList[] = $file;
+	}
+	return $fileList;
 }
 
 function moveFile($file) {
@@ -230,7 +243,6 @@ function pathToUtf8($path) {
 	}
 	return $path;
 }
-
 
 //get the infomation of each file
 function get_files($path) {

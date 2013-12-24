@@ -1,5 +1,4 @@
 <?
-include_once __DIR__ . '/includes/config.inc.php';
 include_once __DIR__ . '/includes/user.func.php';
 
 $act = isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '';
