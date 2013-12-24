@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 	function File(bid) {
 		 this.bid = parseInt(bid);
 		 this.container = $('#nov_' + bid);
+		 this.evaWrap = $('#evaWrap_' + bid);
 		 this.backUrl = encodeURI(location.href);
 	}
 	module.exports = File;
@@ -13,7 +14,7 @@ define(function(require, exports, module) {
 	File.prototype.doLike = function() {
 		var nov = this;
 		var bid = nov.bid;
-		var container = nov.container;
+		var evaWrap = nov.evaWrap;
 		$.ajax({
 			type: 'POST',
 			url: '../../../ajax.php',
@@ -21,15 +22,15 @@ define(function(require, exports, module) {
 			data: {'act':'doLike','bid':bid},
 			success: function(r){
 				if(r.code == 0) {
-					var evaCount = parseInt(container.find('.evaCount').html());
+					var evaCount = parseInt(evaWrap.find('.evaCount').html());
 					if(r.iseva == 1) {
 						evaCount ++;
-						container.find('.eva').addClass('eva_1');
+						evaWrap.find('.eva').addClass('eva_1');
 					} else {
 						evaCount --;
-						container.find('.eva').removeClass('eva_1');
+						evaWrap.find('.eva').removeClass('eva_1');
 					}
-					container.find('.evaCount').html(evaCount);
+					evaWrap.find('.evaCount').html(evaCount);
 				} else if(r.code == 1) {
 					location.href = '../../login.php?back=' + nov.backUrl;
 				} else {

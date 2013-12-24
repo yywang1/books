@@ -7355,6 +7355,7 @@ define("global/global/0.0.1/mod/file-debug", [ "global/global/0.0.1/lib/jquery-d
     function File(bid) {
         this.bid = parseInt(bid);
         this.container = $("#nov_" + bid);
+        this.evaWrap = $("#evaWrap_" + bid);
         this.backUrl = encodeURI(location.href);
     }
     module.exports = File;
@@ -7362,7 +7363,7 @@ define("global/global/0.0.1/mod/file-debug", [ "global/global/0.0.1/lib/jquery-d
     File.prototype.doLike = function() {
         var nov = this;
         var bid = nov.bid;
-        var container = nov.container;
+        var evaWrap = nov.evaWrap;
         $.ajax({
             type: "POST",
             url: "../../../ajax.php",
@@ -7373,15 +7374,15 @@ define("global/global/0.0.1/mod/file-debug", [ "global/global/0.0.1/lib/jquery-d
             },
             success: function(r) {
                 if (r.code == 0) {
-                    var evaCount = parseInt(container.find(".evaCount").html());
+                    var evaCount = parseInt(evaWrap.find(".evaCount").html());
                     if (r.iseva == 1) {
                         evaCount++;
-                        container.find(".eva").addClass("eva_1");
+                        evaWrap.find(".eva").addClass("eva_1");
                     } else {
                         evaCount--;
-                        container.find(".eva").removeClass("eva_1");
+                        evaWrap.find(".eva").removeClass("eva_1");
                     }
-                    container.find(".evaCount").html(evaCount);
+                    evaWrap.find(".evaCount").html(evaCount);
                 } else if (r.code == 1) {
                     location.href = "../../login.php?back=" + nov.backUrl;
                 } else {
@@ -7433,7 +7434,7 @@ define("global/global/0.0.1/mod/batch-debug", [ "global/global/0.0.1/lib/jquery-
     function Batch() {}
     module.exports = Batch;
     Batch.prototype.showLoading = function(str) {
-        $(".main_form").append('<div class="fileList"><img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">' + str + "</div>");
+        $(".main_form").append('<div class="fileList"><img src="themes/default/images/loading.gif" width="16" height="16" class="loading">' + str + "</div>");
     };
     Batch.prototype.hideLoading = function() {
         $("img.loading").parent().remove();
@@ -8868,7 +8869,7 @@ define("global/global/0.0.1/forgetPwd-debug", [ "./lib/jquery-debug", "./mod/ver
                     url: "../../login.php",
                     dataType: "text",
                     beforeSubmit: function() {
-                        $("#submitTip").html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                        $("#submitTip").html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                         $('input[type="submit"]').attr("disabled", true);
                     },
                     success: function(r) {
@@ -8928,7 +8929,7 @@ define("global/global/0.0.1/mod/verify-debug", [ "global/global/0.0.1/lib/jquery
                     name: nameVal
                 },
                 beforeSend: function() {
-                    nameTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                    nameTip.html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                 },
                 success: function(r) {
                     if (r) {
@@ -8964,7 +8965,7 @@ define("global/global/0.0.1/mod/verify-debug", [ "global/global/0.0.1/lib/jquery
                     email: emailVal
                 },
                 beforeSend: function() {
-                    emailTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                    emailTip.html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                 },
                 success: function(r) {
                     if (r) {
@@ -9056,7 +9057,7 @@ define("global/global/0.0.1/mod/verify-debug", [ "global/global/0.0.1/lib/jquery
                     email: emailVal
                 },
                 beforeSend: function() {
-                    $(".submitTip").html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                    $(".submitTip").html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                 },
                 success: function(r) {
                     $(".submitTip").html("");
@@ -9119,7 +9120,7 @@ define("global/global/0.0.1/login-debug", [ "./lib/jquery-debug", "./mod/verify-
                 url: "../../login.php?back=" + backUrl,
                 dataType: "json",
                 beforeSubmit: function() {
-                    $("#submitTip").html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                    $("#submitTip").html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                     $('input[type="submit"]').attr("disabled", true);
                 },
                 success: function(r) {
@@ -9170,7 +9171,7 @@ define("global/global/0.0.1/register-debug", [ "./lib/jquery-debug", "./mod/veri
                 url: "../../login.php?back=" + backUrl,
                 dataType: "json",
                 beforeSubmit: function() {
-                    $("#submitTip").html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+                    $("#submitTip").html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
                     $('input[type="submit"]').attr("disabled", true);
                 },
                 success: function(r) {
@@ -9257,4 +9258,16 @@ define("global/global/0.0.1/mod/verifyAtta-debug", [ "global/global/0.0.1/lib/jq
         };
         $("#attaForm").ajaxSubmit(options);
     };
+});
+
+define("global/global/0.0.1/details-debug", [ "./lib/jquery-debug", "./mod/file-debug" ], function(require, exports, module) {
+    var $ = require("./lib/jquery-debug");
+    var File = require("./mod/file-debug");
+    //喜欢
+    $(".eva").click(function() {
+        var evaWrapId = $(this).parents(".heat").attr("id");
+        var bid = parseInt(evaWrapId.replace("evaWrap_", ""));
+        var f = new File(bid);
+        f.doLike();
+    });
 });

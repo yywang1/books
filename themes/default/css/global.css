@@ -835,7 +835,7 @@ body {
   width: 250px;
 }
 .tbl .area {
-  width: 100%;
+  width: 95%;
   height: 130px;
 }
 .tbl label {
@@ -853,6 +853,9 @@ body {
 }
 .tbl .sele span {
   width: 230px;
+}
+.tbl .sele ul {
+  width: 268px;
 }
 .tbl .ml {
   margin-left: 10px;

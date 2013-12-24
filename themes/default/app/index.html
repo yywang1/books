@@ -18,15 +18,19 @@
 		<!--{loop $fileList $file}-->
 		<li id="nov_{$file['bid']}">
             <div class="t">
-                <h3><a href="{$WEB_ROOT}details.php?bid={$file['bid']}" target="_blank">{$file['bname']}</a><span>作者：{$file['bauthor']}</span></h3>
-                <p>热度：<span class="evaCount">{$file['beva']}</span>
-				<!--{if $file['iseva']}-->
-				<span class="eva eva_1" title="取消喜欢"></span>
-				<!--{else}-->
-				<span class="eva" title="喜欢"></span>
-				<!--{/if}-->
-				</p>
-            </div>
+					<h3>
+						<a href="{$WEB_ROOT}details.php?bid={$file['bid']}" target="_blank">{$file['bname']}</a>
+						<span>作者：{$file['bauthor']}</span>
+					</h3>
+					<p id="evaWrap_{$file['bid']}">
+						热度：<span class="evaCount">{$file['beva']}</span>
+						<!--{if $file['iseva']}-->
+						<span class="eva eva_1" title="取消喜欢"></span>
+						<!--{else}-->
+						<span class="eva" title="喜欢"></span>
+						<!--{/if}-->
+					</p>
+				</div>
             <div class="d">{$file['bsummary']}</div>
             <div class="o">
                 <p class="oc1">

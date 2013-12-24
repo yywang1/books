@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 	module.exports = Batch;
 	
 	Batch.prototype.showLoading = function(str) {
-		$('.main_form').append('<div class="fileList"><img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">' + str + '</div>');	
+		$('.main_form').append('<div class="fileList"><img src="themes/default/images/loading.gif" width="16" height="16" class="loading">' + str + '</div>');	
 	};
 	
 	Batch.prototype.hideLoading = function() {

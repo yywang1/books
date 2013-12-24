@@ -11,7 +11,14 @@
 	<!--{if !empty($file)}-->
     <div class="articleTitle">
 		<h1>{$file['bname']}</h1>
-		<div class="heat">热度：<span class="evaCount">{$file['beva']}</span> <span class="eva eva_0" title="喜欢"></span></div>
+		<div class="heat" id="evaWrap_{$bid}">
+			热度：<span class="evaCount">{$file['beva']}</span>
+			<!--{if $file['iseva']}-->
+			<span class="eva eva_1" title="取消喜欢"></span>
+			<!--{else}-->
+			<span class="eva" title="喜欢"></span>
+			<!--{/if}-->
+		</div>
 	</div>
     <div class="articleInfo">
         <table>
@@ -74,5 +81,14 @@
 </div>
 {template c_footer.html}
 {template c_script.html}
+<script>
+<!--{if $GLOBALS['JS_DEBUG']}-->	
+	seajs.use('loc/details');
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/details']);
+	})
+<!--{/if}-->
+</script>
 </body>
 </html>

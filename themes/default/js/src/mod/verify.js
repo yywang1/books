@@ -40,7 +40,7 @@ define(function(require, exports, module) {
 					name : nameVal
 				},
 				beforeSend : function () {
-					nameTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+					nameTip.html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
 					if (r) {
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 					email : emailVal
 				},
 				beforeSend : function () {
-					emailTip.html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+					emailTip.html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
 					if (r) {
@@ -181,7 +181,7 @@ define(function(require, exports, module) {
 					email : emailVal
 				},
 				beforeSend : function () {
-					$('.submitTip').html('<img src="themes/standard/images/loading.gif" width="16" height="16" class="loading">');
+					$('.submitTip').html('<img src="themes/default/images/loading.gif" width="16" height="16" class="loading">');
 				},
 				success : function (r) {
 					$('.submitTip').html('');

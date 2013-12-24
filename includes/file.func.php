@@ -164,6 +164,19 @@ function updateFileById($bid, $file) {
 		if(!$db->query($sql_update_tags)) {
 			return false;
 		};
+	} else {
+		$sql_update_tags = "UPDATE tags SET ";
+		foreach($db->attr_tags as $key=>$tag) {
+			$sql_update_tags .= ($key . "=0");
+			if($key != ('t' . count($db->attr_tags))) {
+				$sql_update_tags .= ",";
+			} else {
+				$sql_update_tags .= " WHERE bid=" . $bid;
+			}
+		}
+		if(!$db->query($sql_update_tags)) {
+			return false;
+		};
 	}
 	return true;
 }
