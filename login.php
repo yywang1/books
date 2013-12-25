@@ -12,7 +12,7 @@ switch ($act) {
 		$r = verifyLogin($uname, $upwd);
 		if($r['code'] == 0) {
 			$r['back'] = $_GET['back'];
-			doLogin($r['uid']);
+			doLogin($r['user']);
 		}
 		echo json_encode($r);
 		die();
@@ -82,7 +82,7 @@ switch ($act) {
 		die();
 		break;
 	case 'logout':
-		unset($_SESSION['uid']);
+		unset($_SESSION['user']);
 		redirect($WEB_ROOT . "login.php?back=$back");
 		break;
 	default:

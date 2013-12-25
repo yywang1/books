@@ -414,6 +414,12 @@ img {
 .loading {
   margin-right: 5px;
 }
+h1 {
+  font-size: 28px;
+  font-family: Microsoft YaHei;
+  font-weight: normal;
+  line-height: 36px;
+}
 /*layout*/
 body {
   background: url(../images/bodybg.png) repeat-x 0 0 #e3e3e3;
@@ -445,13 +451,14 @@ body {
   float: left;
 }
 .topNav li {
+  color: #ddd;
+  font-size: 14px;
   float: left;
+  white-space: nowrap;
   padding-left: 20px;
 }
 .topNav li a {
   color: #ddd;
-  font-size: 14px;
-  white-space: nowrap;
 }
 #topSearch {
   width: 210px;
@@ -678,18 +685,33 @@ body {
 .sbSearch .btn5 {
   margin-top: 12px;
 }
-.sbhot {
+.sbMenu {
+  background: url(../images/line1.gif) repeat-x 0 100%;
+  padding: 10px 17px 10px 15px;
+  font-size: 14px;
+  line-height: 24px;
+}
+.sbMenu.nobg {
+  background: none;
+}
+.sbHot {
   line-height: 22px;
   padding: 13px 17px 0 15px;
 }
-.sbhot h3 {
+.sbHot h3 {
   margin-bottom: 2px;
 }
-.sbhot a {
+.sbHot a {
   margin-right: 12px;
 }
-.result {
+.col2Main {
   margin-left: 180px;
+}
+.padMain {
+  padding: 0 30px 30px;
+}
+.padMain h1 {
+  padding: 25px 0;
 }
 .filter {
   width: 100%;
@@ -803,10 +825,6 @@ body {
   position: relative;
 }
 .main_form h1 {
-  font-size: 28px;
-  font-family: Microsoft YaHei;
-  font-weight: normal;
-  line-height: 36px;
   padding: 25px 70px 25px 0;
 }
 .main_form .related {

@@ -12,6 +12,9 @@ define(function(require, exports, module) {
 		this.pwdTip = $('#pwdTip');
 		this.repwd = $('input[name="repwd"]');
 		this.repwdTip = $('#repwdTip');
+		this.oldpwd = $('input[name="oldpwd"]');
+		this.oldpwdTip = $('#oldpwdTip');
+		
 	}
 	module.exports = Verify;
 	
@@ -133,6 +136,26 @@ define(function(require, exports, module) {
 		}
 		if(isShowRight) {
 			repwdTip.addClass('suc').html('可用');
+		}
+		return true;
+	};
+	
+	Verify.prototype.verifyOldpwd = function(isShowRight) {
+		var isShowRight = arguments[0] ? arguments[0] : false;
+		var oldpwd = this.oldpwd;
+		var oldpwdVal = oldpwd.val();
+		var oldpwdTip = this.oldpwdTip;
+
+		oldpwd.focus(function () {
+			oldpwdTip.removeClass('error').removeClass('suc').html('由6-16位下划线、英文字母或数字组成');
+		});
+
+		if ((oldpwdVal.length < 6) || (oldpwdVal.length > 16) || (oldpwdVal.search(/^\w+$/g))) {
+			oldpwdTip.addClass('error');
+			return false;
+		}
+		if(isShowRight) {
+			oldpwdTip.addClass('suc').html('可用');
 		}
 		return true;
 	};

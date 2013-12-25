@@ -14,6 +14,7 @@
 			"forgetPwd.js",
 			"login.js",
 			"register.js",
+			"changePwd.js",
 			"upload.js",
 			"details.js"
 		]

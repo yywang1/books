@@ -16,6 +16,12 @@
 .multial a { margin-left: 10px; }
 .multiar a { margin-right: 10px; }
 .loading { margin-right: 5px; }
+h1 {
+	font-size: 28px;
+	font-family: Microsoft YaHei;
+	font-weight: normal;
+	line-height: 36px;
+}
 
 /*layout*/
 body {
@@ -48,12 +54,13 @@ body {
 .topNav {
 	float: left;
 	li {
+		color: #ddd;
+		font-size: 14px;
 		float: left;
+		white-space: nowrap;
 		padding-left: 20px;
 		a{
 			color: #ddd;
-			font-size: 14px;
-			white-space: nowrap;
 		}
 	}
 }
@@ -272,7 +279,16 @@ body {
 		margin-top: 12px;
 	}
 }
-.sbhot {
+.sbMenu {
+	background: url(../images/line1.gif) repeat-x 0 100%;
+	padding: 10px 17px 10px 15px;
+	font-size: 14px;
+	line-height: 24px;
+	&.nobg {
+		background: none;
+	}
+}
+.sbHot {
 	line-height: 22px;
 	padding: 13px 17px 0 15px;
 	h3 {
@@ -282,8 +298,14 @@ body {
 		margin-right: 12px;
 	}
 }
-.result {
+.col2Main {
 	margin-left: @left-side-width;
+}
+.padMain {
+	padding: 0 30px 30px;
+	h1 {
+		padding: 25px 0;
+	}
 }
 .filter {
 	width: 100%;
@@ -376,22 +398,18 @@ body {
 	.base-box-shadow;
 	min-height: 560px;
 	position: relative;
-}
-.main_form h1 {
-	font-size: 28px;
-	font-family: Microsoft YaHei;
-	font-weight: normal;
-	line-height: 36px;
-	padding: 25px 70px 25px 0;
-}
-.main_form .related {
-	position: absolute;
-	top: 34px;
-	right: 30px;
-	font-size: 14px;
-}
-.main_form .related a {
-	margin-left: 15px;
+	h1 {
+		padding: 25px 70px 25px 0;		
+	}
+	.related {
+		position: absolute;
+		top: 34px;
+		right: 30px;
+		font-size: 14px;
+	}
+	.related a {
+		margin-left: 15px;
+	}
 }
 .tbl {
 	td {

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<title>Ava is reading...</title>
+{template ../c_link.html}
+</head>
+
+<body>
+{template ../c_header.html}
+<div class="main_browse">
+	{template c_sidebar.html}
+	<div class="col2Main padMain">
+		<h1>修改密码</h1>
+		<form id="changePwdForm" method="post">
+			<input type="hidden" name="act" value="changePwd">
+			<table class="tbl">
+				<tr class="pwdtr">
+					<th>旧密码：<span class="required">*</span></th>
+					<td><input type="password" class="text" name="oldpwd" maxLength="16"></td>
+					<td><span id="oldpwdTip" class="tip">由6-16位下划线、英文字母或数字组成</span></td>
+				</tr>
+				<tr class="pwdtr">
+					<th>新密码：<span class="required">*</span></th>
+					<td><input type="password" class="text" name="pwd" maxLength="16"></td>
+					<td><span id="pwdTip" class="tip">由6-16位下划线、英文字母或数字组成</span></td>
+				</tr>
+				<tr class="pwdtr">
+					<th>确认新密码：<span class="required">*</span></th>
+					<td><input type="password" class="text" name="repwd" maxLength="16"></td>
+					<td><span id="repwdTip" class="tip"></span></td>
+				</tr>
+				<tr>
+					<td class="btnTd" colspan="3"><input class="btn1" type="submit" value="提  交"><a href="javascript:history.go(-1)" class="btn3">返&nbsp;&nbsp;回</a><span id="submitTip" class="tip"></span></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div class="clear">
+	</div>
+</div>
+{template ../c_footer.html}
+{template ../c_script.html}
+<script>
+<!--{if $GLOBALS['JS_DEBUG']}-->
+	seajs.use('loc/changePwd');
+	
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/changePwd']);
+	})
+<!--{/if}-->
+</script>
+</body>
+</html>

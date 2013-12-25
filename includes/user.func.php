@@ -16,7 +16,9 @@ function insertUser($user) {
 		'" . date('Y-m-j') . "',
 		'" . date('Y-m-j') . "')";
 	if($db->query($insert_user_sql)) {
-		$_SESSION['uid'] = mysql_insert_id();
+		//$_SESSION['uid'] = mysql_insert_id();
+		$uid = mysql_insert_id();
+		$_SESSION['user'] = getUserById($uid);
 		return true;
 	} else {
 		return false;
@@ -42,18 +44,17 @@ function verifyLogin($uname, $upwd) {
 				$r['msg'] = 'The password is wrong.';
 				return $r;
 			} else {
-				$r['uid'] = $upwdarr['uid'];
-				
+				$r['user'] = $upwdarr;				
 			}
 		}
 	}
 	return $r;
 }
 
-function doLogin($uid) {
+function doLogin($user) {
 	$db = $GLOBALS['db'];
-	$_SESSION['uid'] = $uid;
-	$ulastdate_sql = "UPDATE users SET ulastdate='". date('Y-m-j') ."' WHERE uid=" . $uid;
+	$_SESSION['user'] = $user;
+	$ulastdate_sql = "UPDATE users SET ulastdate='". date('Y-m-j') ."' WHERE uid=" . $user['uid'];
 	$db->query($ulastdate_sql);
 }
 
