@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<title>Ava is reading...</title>
+{template ../c_link.html}
+</head>
+
+<body>
+{template ../c_header.html}
+<div class="main_browse">
+	{template c_sidebar.html}
+	<div class="col2Main padMain">
+		<h1>
+			<!--{if $act == 'upload'}-->
+				上传记录
+			<!--{elseif $act == 'download'}-->
+				下载记录
+			<!--{else}-->
+				好评记录
+			<!--{/if}-->
+		</h1>
+		<div class="fileList bbord">
+			<table>
+				<thead>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<div class="clear">
+	</div>
+</div>
+{template ../c_footer.html}
+{template ../c_script.html}
+</body>
+</html>

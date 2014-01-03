@@ -11,25 +11,26 @@ switch ($act) {
 			die();
 		}
 		
-		$uid = $_SESSION['uid'];
+		$uid = $_SESSION['user']['uid'];
 		$bid = $_POST['bid'];		
 		$iseva = 0;
 		$getRes = $db->query("SELECT * FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1");
 		if($row = mysql_fetch_assoc($getRes)) {
-			$iseva = $row['iseva'] ? 0 : 1;
-			$updateSql = "UPDATE misc SET iseva=$iseva WHERE mid=" . $row['mid'];
-			$r = $db->query($updateSql);
+			if($row['iseva']) {
+				$sql = "UPDATE misc SET iseva=0 WHERE mid=" . $row['mid'];			
+				doFileEva($bid, -1);
+			} else {
+				$sql = "UPDATE misc SET iseva=1 WHERE mid=" . $row['mid'];
+				$iseva = 1;
+				doFileEva($bid, 1);
+			}
+			$r = $db->query($sql);
 		} else {
-			$insertSql = "INSERT INTO misc(bid, uid, isupload, isdown, iseva) VALUES($bid, $uid, 0, 0, 1)";
-			$r = $db->query($insertSql);
+			$sql = "INSERT INTO misc(bid, uid, isupload, isdown, iseva) VALUES($bid, $uid, 0, 0, 1)";
+			$r = $db->query($sql);
 			$iseva = 1;
-		}
-		
-		if($iseva == 1) {
-			doMoneyAndCtbt($uid, 0, 1);
 			doFileEva($bid, 1);
-		} else {
-			doFileEva($bid, -1);
+			doMoneyAndCtbt($uid, 0, 1);
 		}
 		
 		if($r) {

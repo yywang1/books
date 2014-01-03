@@ -26,7 +26,7 @@ function getFileById($bid) {
 		$file['isdown'] = 0;
 		$file['iseva'] = 0;
 		if(checkLogin()) {
-			$uid = $_SESSION['uid'];
+			$uid = $_SESSION['user']['uid'];
 			$getMiscRes = $db->query("SELECT * FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1");
 			if($row = mysql_fetch_assoc($getMiscRes)) {
 				$file['isupload'] = $row['isupload'];
@@ -101,6 +101,7 @@ function insertFile($file) {
 			'" . $file['borig'] . "',
 			'" . date('Y-m-j') . "')";
 		if($db->query($insert_books_sql)) {
+			$bid = mysql_insert_id();
 			if(empty($file['btags'])) {
 				$fieldStr = '';
 				$valueStr = '';
@@ -108,7 +109,7 @@ function insertFile($file) {
 					$fieldStr .= (',' . $key);
 					$valueStr .= ',0';
 				}
-				$sql_insert_tags = "INSERT INTO tags(bid" . $fieldStr . ") VALUES(" . mysql_insert_id() . $valueStr . ")";
+				$sql_insert_tags = "INSERT INTO tags(bid" . $fieldStr . ") VALUES(" . $bid . $valueStr . ")";
 			} else {
 				$fieldStr = '';
 				$valueStr = '';
@@ -120,11 +121,11 @@ function insertFile($file) {
 						$valueStr .= ',0';
 					}						
 				}
-				$sql_insert_tags = "INSERT INTO tags(bid" . $fieldStr . ") VALUES(" . mysql_insert_id() . $valueStr . ")";
+				$sql_insert_tags = "INSERT INTO tags(bid" . $fieldStr . ") VALUES(" . $bid . $valueStr . ")";
 			}
 			
 			if($db->query($sql_insert_tags)) {
-				return true;
+				return $bid;
 			}
 		}
 	}

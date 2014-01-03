@@ -1,10 +1,17 @@
 <?
 include_once __DIR__ . '/includes/file.func.php';
+include_once __DIR__ . '/includes/user.func.php';
 
 $bid = isset($_REQUEST['bid']) && $_REQUEST['bid'] ? intval($_REQUEST['bid']) : 0;
 if($bid == 0) {
 	redirect("index.php");
 }
+
+if(! checkLogin()) {
+	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+}
+
+
 $file = getFileById($bid);
 $filePath = ROOT_PATH . $file['bpath'];
 $fileName = basename($filePath);
@@ -22,6 +29,9 @@ if(file_exists(toGb($filePath))) {
 	}
 
 	readfile(toGb($filePath));
+	
+	doUserRecord('download', $bid, $_SESSION['user']['uid']);
+	
 } else {
 	die();
 }

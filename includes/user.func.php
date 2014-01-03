@@ -16,7 +16,6 @@ function insertUser($user) {
 		'" . date('Y-m-j') . "',
 		'" . date('Y-m-j') . "')";
 	if($db->query($insert_user_sql)) {
-		//$_SESSION['uid'] = mysql_insert_id();
 		$uid = mysql_insert_id();
 		$_SESSION['user'] = getUserById($uid);
 		return true;
@@ -77,6 +76,27 @@ function doMoneyAndCtbt($uid, $addMoney, $addCtbt) {
 			WHERE uid=" . $uid;
 		$db->query($sql);
 	}
+}
+
+function doUserRecord($key, $bid, $uid) {
+	$db = $GLOBALS['db'];
+	$isupload = 0;
+	$isdown = 0;
+	$iseva = 0;
+	if($key == 'upload') {
+		$isupload = 1;
+	} elseif($key == 'download') {
+		$isdown = 1;
+	} elseif($key == 'eva'){
+		$iseva = 1;
+	}
+	$sql = "INSERT INTO misc(bid, uid, isupload, isdown, iseva) VALUES(
+		'" . $bid . "',
+		'" . $uid . "',
+		'" . $isupload . "',
+		'" . $isdown . "',			
+		'" . $iseva . "')";
+	$db->query($sql);
 }
 
 ?>

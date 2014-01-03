@@ -1,6 +1,10 @@
 <?
 include_once __DIR__ . '/includes/file.func.php';
 
+if(! checkLogin()) {
+	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+}
+
 $act = isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '';
 
 switch ($act) {
@@ -52,10 +56,10 @@ switch ($act) {
 			$file['bstyle'] = 0;
 			$file['borig'] = '';
 			$file['btags'] = $btags;
-			if(insertFile($file)) {
-				$r['legal'][] = $file;
-			} else {
+			if(! insertFile($file)) {
 				$r['illegal'][] = $file;
+			} else {
+				$r['legal'][] = $file;
 			}
 		}
 		if(empty($r['legal']) && empty($r['illegal'])) {

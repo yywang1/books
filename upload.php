@@ -1,5 +1,10 @@
 <?
 include_once __DIR__ . '/includes/file.func.php';
+include_once __DIR__ . '/includes/user.func.php';
+
+if(! checkLogin()) {
+	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+}
 
 $act = isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '';
 
@@ -50,11 +55,12 @@ switch ($act) {
 		$file['borig'] = $_POST['borig'];
 		$file['btags'] = isset($_POST['btags']) ? $_POST['btags'] : array();
 		$file['bpath'] =  $_POST['bpath'];
-		$r = insertFile($file);
-		if($r === true) {
-			$uploadResult = true;
-		} else {
+		$bid = insertFile($file);
+		if(! $bid) {
 			$uploadResult = false;
+		} else {
+			$uploadResult = true;
+			doUserRecord('upload', $bid, $_SESSION['user']['uid']);
 		}
 		break;
 	default:
