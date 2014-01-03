@@ -60,7 +60,7 @@ switch ($act) {
 			$uploadResult = false;
 		} else {
 			$uploadResult = true;
-			doUserRecord('upload', $bid, $_SESSION['user']['uid']);
+			doUserRecord('isupload', $bid, $_SESSION['user']['uid']);
 		}
 		break;
 	default:

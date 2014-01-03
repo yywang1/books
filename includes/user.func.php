@@ -80,23 +80,34 @@ function doMoneyAndCtbt($uid, $addMoney, $addCtbt) {
 
 function doUserRecord($key, $bid, $uid) {
 	$db = $GLOBALS['db'];
-	$isupload = 0;
-	$isdown = 0;
-	$iseva = 0;
-	if($key == 'upload') {
-		$isupload = 1;
-	} elseif($key == 'download') {
-		$isdown = 1;
-	} elseif($key == 'eva'){
-		$iseva = 1;
+	
+	$getRes = $db->query("SELECT * FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1");
+	if($row = mysql_fetch_assoc($getRes)) {
+		if($row[$key]) {
+			return false;
+		} else {
+			$sql = "UPDATE misc SET $key=1 WHERE mid=" . $row['mid'];
+			$r = $db->query($sql);
+		}
+	} else {
+		$isupload = 0;
+		$isdown = 0;
+		
+		if($key == 'upload') {
+			$isupload = 1;
+		} elseif($key == 'download') {
+			$isdown = 1;
+		}
+		
+		$sql = "INSERT INTO misc(bid, uid, isupload, isdown, iseva) VALUES(
+			'" . $bid . "',
+			'" . $uid . "',
+			'" . $isupload . "',
+			'" . $isdown . "',
+			'0')";
+		$db->query($sql);
 	}
-	$sql = "INSERT INTO misc(bid, uid, isupload, isdown, iseva) VALUES(
-		'" . $bid . "',
-		'" . $uid . "',
-		'" . $isupload . "',
-		'" . $isdown . "',			
-		'" . $iseva . "')";
-	$db->query($sql);
+	
 }
 
 ?>

@@ -30,7 +30,7 @@ if(file_exists(toGb($filePath))) {
 
 	readfile(toGb($filePath));
 	
-	doUserRecord('download', $bid, $_SESSION['user']['uid']);
+	doUserRecord('isdown', $bid, $_SESSION['user']['uid']);
 	
 } else {
 	die();
