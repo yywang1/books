@@ -39,7 +39,7 @@ $siteConf['cacheDir'] = ROOT_PATH . 'templates/';
 $siteConf['tplCacheBaseDir'] = ROOT_PATH . 'templates/';
 $siteConf['forceRefreshCache'] = false;
 $siteConf['tpl_debug'] = true;
-include_once __DIR__ . '/Template.php';
+include_once __DIR__ . '../../vender/Template.php';
 
 // COOKIE_DOMAIN
 defined('COOKIE_DOMAIN') || define('COOKIE_DOMAIN', '.' . SITE_DOMAIN);
