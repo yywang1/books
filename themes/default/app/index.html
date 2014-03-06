@@ -5,7 +5,7 @@
 {template c_link.html}
 </head>
 
-<body>
+<body data-key="index">
 {template c_header.html}
 <div class="main_home">
     <div class="quickNav">
@@ -53,14 +53,5 @@
 </div>
 {template c_footer.html}
 {template c_script.html}
-<script>
-<!--{if $GLOBALS['JS_DEBUG']}-->	
-	seajs.use('loc/index');
-<!--{else}-->
-	seajs.use('global', function () {
-		seajs.use(['global/global/0.0.1/index']);
-	})
-<!--{/if}-->
-</script>
 </body>
 </html>

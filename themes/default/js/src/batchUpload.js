@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-	var $ = require('./lib/jquery');
+	var $ = require('jquery');
 	var Batch = require('./mod/batch');
 	var bu = new Batch();
 	

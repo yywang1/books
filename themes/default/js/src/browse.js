@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-	var $ = require('./lib/jquery');
+	var $ = require('jquery');
 	
 	//下拉框
 	require('./mod/selectWidget');

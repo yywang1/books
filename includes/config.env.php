@@ -6,7 +6,7 @@ $db_pass = "root";
 $db_name = "books";
 
 // For development or For production
-$GLOBALS['JS_DEBUG'] = false;
+$GLOBALS['JS_DEBUG'] = true;
 
 /*themes:
   default        - seajs and lesscss

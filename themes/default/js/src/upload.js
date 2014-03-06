@@ -1,6 +1,6 @@
 define(function(require, exports, modulselectWidgete) {
 
-	var $ = require('./lib/jquery');
+	var $ = require('jquery');
 	
 	//点击Choose File按钮回复原始状态
 	$('#attachment').mousedown(function() {

@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-	var $ = require('../lib/jquery');
+	var $ = require('jquery');
 	
 	//js模拟下拉框
 	$.fn.selectWidget = function (obj) {
