@@ -3,6 +3,7 @@
     <ul class="topNav">
         <li><a href="{$WEB_ROOT}browse.php">浏览书库</a></li>
         <li><a href="{$WEB_ROOT}user/index.php">我的书库</a></li>
+        <li><a href="{$WEB_ROOT}master/index.php">站长</a></li>
         <li>
 			<!--{if isset($_SESSION['user']) && $_SESSION['user']['uid'] > 0}-->
 				欢迎 {$_SESSION['user']['uname']}，<a href="{$WEB_ROOT}login.php?act=logout&back={echo urlencode($_SERVER['REQUEST_URI'])}">退出</a>

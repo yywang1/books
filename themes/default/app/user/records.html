@@ -11,34 +11,25 @@
 	{template c_sidebar.html}
 	<div class="col2Main padMain">
 		<h1>
-			<!--{if $act == 'upload'}-->
-				上传记录
-			<!--{elseif $act == 'download'}-->
-				下载记录
-			<!--{else}-->
-				好评记录
-			<!--{/if}-->
+			{$acts[$act]}记录
 		</h1>
 		<div class="fileList bbord">
+			<h3>共{$acts[$act]} 6 个文件，文件列表如下：</h3>
 			<table>
 				<thead>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>书名</td>
+						<td>作者</td>
 					</tr>
 				</thead>
 				<tbody>
+					<!--{loop $fileList $file}-->
 					<tr>
-						<td></td>
+						<td><a href="{$WEB_ROOT}details.php?bid={$file['bid']}" target="_blank">{$file['bname']}</a></td>
+						<td>{$file['bauthor']}</td>
 					</tr>
+					<!--{/loop}-->
 				</tbody>
-				<tfoot>
-					<tr>
-						<td></td>
-					</tr>
-				</tfoot>
 			</table>
 		</div>
 	</div>

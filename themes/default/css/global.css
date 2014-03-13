@@ -686,14 +686,14 @@ body {
 .sbSearch .btn5 {
   margin-top: 12px;
 }
-.sbMenu {
-  background: url(../images/line1.gif) repeat-x 0 100%;
-  padding: 10px 17px 10px 15px;
+.sb-menu {
+  padding: 10px 15px;
   font-size: 14px;
   line-height: 24px;
 }
-.sbMenu.nobg {
-  background: none;
+.sb-separate {
+  background: url(../images/line1.gif) repeat-x 0 100%;
+  height: 2px;
 }
 .sbHot {
   line-height: 22px;
