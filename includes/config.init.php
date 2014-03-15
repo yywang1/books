@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/config.env.php';
+require_once __DIR__ . '/config.env.php';
 
 // encoding
 header("Content-type: text/html; Charset=utf-8");
@@ -7,46 +7,11 @@ header("Content-type: text/html; Charset=utf-8");
 //timezone
 date_default_timezone_set('Asia/Shanghai');
 
-// get root directory and default paths
-define('ROOT_PATH', str_replace('includes/config.init.php', '', str_replace('\\', '/', __FILE__)));
-
-if ($_SERVER['DOCUMENT_ROOT'] != "") {
-    $WEB_ROOT = substr(realpath(dirname(__FILE__) . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
-    if (trim($WEB_ROOT, '/\\')) {
-    	$WEB_ROOT = '/' . trim($WEB_ROOT, '/\\') . '/';
-    } else {
-    	$WEB_ROOT = '/';
-    }
-} else {
-    $WEB_ROOT = "/";
-}
-
-$theme_path = $WEB_ROOT . 'themes/' . $theme . '/';
-$CSS_PATH = $theme_path . 'css/';
-$JS_PATH = $theme_path . 'js/';
-$IMG_PATH = $theme_path . 'images/';
-
-if ($theme == 'seajs_custom') {
-	$selfurl = $_SERVER['PHP_SELF']; 
-	$file_name_with_postfix = substr($selfurl, strrpos($selfurl , '/')+1);  
-	$file_name = str_replace('.php', '', $file_name_with_postfix);
-}
-
-// Zandy / PHP-TEMPLATE-ENGINE
-$siteConf['tplBaseDir'] = ROOT_PATH; //D:/zwnmp/web/test/books/
-$siteConf['tplDir'] = ROOT_PATH . 'themes/' . $theme . '/app/';
-$siteConf['cacheDir'] = ROOT_PATH . 'templates/';
-$siteConf['tplCacheBaseDir'] = ROOT_PATH . 'templates/';
-$siteConf['forceRefreshCache'] = false;
-$siteConf['tpl_debug'] = true;
-include_once __DIR__ . '../../vender/Template.php';
-
 // COOKIE_DOMAIN
 defined('COOKIE_DOMAIN') || define('COOKIE_DOMAIN', '.' . SITE_DOMAIN);
 defined('COOKIE_EXPIRE') || define('COOKIE_EXPIRE', 2592000); // 60*60*24*30
 defined('COOKIE_PATH') || define('COOKIE_PATH', '/');
 defined('SESSION_NAME') || define('SESSION_NAME', 'AIRID');
-
 // @ini_set('memory_limit', '16M');
 @ini_set('session.cache_expire', 1800);
 @ini_set('session.gc_maxlifetime', COOKIE_EXPIRE);
@@ -59,11 +24,32 @@ defined('SESSION_NAME') || define('SESSION_NAME', 'AIRID');
 defined('SESSION_NAME') && @ini_set('session.name', SESSION_NAME);
 session_start();
 
-//common functions
-include_once __DIR__ . '/global.func.php';
+//Initializer
+require_once __DIR__ . '../../vender/Pimple.php';
+$container = new Pimple();
 
-// 初始化数据库类
-include_once __DIR__ . '/db.class.php';
-$db = new Db($db_host, $db_user, $db_pass, $db_name);
+$container['ROOT_PATH'] = str_replace('includes/config.init.php', '', str_replace('\\', '/', __FILE__));
+if ($_SERVER['DOCUMENT_ROOT'] != "") {
+	$WEB_ROOT = substr(realpath(dirname(__FILE__) . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
+	if (trim($WEB_ROOT, '/\\')) {
+		$WEB_ROOT = '/' . trim($WEB_ROOT, '/\\') . '/';
+	} else {
+		$WEB_ROOT = '/';
+	}
+} else {
+	$WEB_ROOT = "/";
+}
+$container['WEB_ROOT'] = $WEB_ROOT;
+
+require_once __DIR__ . '/Initializer.php';
+$baseinit = new Initializer();
+$container = $baseinit->initConf($container);
+$container = $baseinit->initPath($container);
+$container = $baseinit->initTwig($container);
+$container = $baseinit->initVars($container);
+$container = $baseinit->initBase($container);
+
+//common functions
+require_once __DIR__ . '/global.func.php';
 
 ?>

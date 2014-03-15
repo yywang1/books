@@ -1,26 +1,25 @@
 <?php
 include_once __DIR__ . '/config.init.php';
-include_once __DIR__ . '/config.vars.php';
 
 class Db {
 	var $link_id = NULL;
 	var $attr_tags = array();
 	var $db_name = '';
 	
-	function __construct($dbhost, $dbuser, $dbpass, $dbname) {
-		$this->init($dbhost, $dbuser, $dbpass, $dbname);
+	function __construct($siteConf, $attr_tags) {
+		$this->init($siteConf, $attr_tags);
 	}
 	
-	function init($dbhost, $dbuser, $dbpass, $dbname) {
+	function init($siteConf, $attr_tags) {
 		if($this->link_id) {
             $this->close();
         }
-		if(!($this->link_id = mysql_connect($dbhost, $dbuser, $dbpass))) {
+		if(!($this->link_id = mysql_connect($siteConf['db_host'], $siteConf['db_user'], $siteConf['db_pass']))) {
 			die('Could not connect: ' . mysql_error());
 		}		
-		mysql_select_db($dbname, $this->link_id);
-		$this->attr_tags = $GLOBALS['attr_tags'];
-		$this->db_name = $dbname;
+		mysql_select_db($siteConf['db_name'], $this->link_id);
+		$this->attr_tags = $attr_tags;
+		$this->db_name = $siteConf['db_name'];
 	}
 	
 	function query($sql) {
@@ -30,6 +29,15 @@ class Db {
 	function close() {
         return mysql_close($this->link_id);
     }
+	
+	function fetchAssoc($sql) {
+		$res =  $this->query($sql);
+		$arr = array();
+		while($row = mysql_fetch_assoc($res)) {
+			$arr[] = $row;
+		}
+		return $arr;
+	}
 	
 	function checkExist($sql) {
 		$res =  $this->query($sql);
@@ -48,15 +56,6 @@ class Db {
 		return $total;
 	}
 	
-	function getIds($sql) {
-		$res =  $this->query($sql);
-		$bids = array();
-		while($row = mysql_fetch_assoc($res)) {
-			$bids[] = $row['bid'];
-		}
-		return $bids;
-	}
-	
 	function isTableExist($tablename) {
 		$sql = "SHOW TABLES FROM " . $this->db_name;
 		$res = $this->query($sql);
@@ -67,7 +66,6 @@ class Db {
 		}
 		return false;		
 	}
-		
 	
 }
 

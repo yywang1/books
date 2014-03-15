@@ -52,8 +52,6 @@ function arrToJson($arr) {
 	return json_encode($arr);
 }
 
-
-
 //file size to [M, K, B]
 function transSize($size){ 
 	if($size >= 1024*1024) {
@@ -72,7 +70,7 @@ function dataToHtml($str){
 }
 
 //get key according to value
-function valueToKey($str, $arr){
+function getKeyByValue($str, $arr){
 	foreach($arr as $key => $value) {
 		if($str == $value) {
 			return $key;
@@ -154,10 +152,11 @@ function getPageString($page, $url, $filesTotal, $pageSize) {
 			$pageString .= '<a class="next" href="' . $url . ($page + 1) . '">' . '下一页' . '</a>';
 		}
 	}
+	$pageString = '<div class="pages">' . $pageString . '</div>';
 	return $pageString;
 }
 
-function checkLogin() {
+function isLogin() {
 	if(isset($_SESSION['user']) && $_SESSION['user']['uid'] > 0) {
 		return true;
 	} else {

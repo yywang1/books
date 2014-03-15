@@ -1,9 +1,9 @@
 <?php
 // database
 $db_host = "127.0.0.1:3306";
+$db_name = "books";
 $db_user = "root";
 $db_pass = "root";
-$db_name = "books";
 
 // For development or For production
 $GLOBALS['JS_DEBUG'] = true;

@@ -574,6 +574,9 @@ body {
   padding: 0 30px;
   margin-top: 17px;
 }
+.hotSearch h3 {
+  float: left;
+}
 .hotSearch a {
   margin-right: 13px;
 }

@@ -1,19 +1,18 @@
 <?
-include_once __DIR__ . '/includes/file.func.php';
-include_once __DIR__ . '/includes/user.func.php';
+include_once __DIR__ . '/includes/config.init.php';
 
 $bid = isset($_REQUEST['bid']) && $_REQUEST['bid'] ? intval($_REQUEST['bid']) : 0;
 if($bid == 0) {
 	redirect("index.php");
 }
 
-if(! checkLogin()) {
+if(! isLogin()) {
 	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
 }
 
 
-$file = getFileById($bid);
-$filePath = ROOT_PATH . $file['bpath'];
+$file = $container['filedao']->getFileByBid($bid);
+$filePath = $container['ROOT_PATH'] . $file['bpath'];
 $fileName = basename($filePath);
 
 if(file_exists(toGb($filePath))) {

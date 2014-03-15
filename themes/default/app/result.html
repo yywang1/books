@@ -2,21 +2,15 @@
 <html>
 <head>
 <title>Ava is reading...</title>
-{template c_link.html}
+{{common_html['link'] | raw}}
 </head>
 
-<body>
-{template c_header.html}
+<body data-key="index">
+{{common_html['header'] | raw}}
 <div class="main_form">
-	<!--{if isset($resultInfo)}-->
-		<!--{if $resultInfo}-->
-			<div class="sucDone doneMt">&radic; 恭喜你，成功啦！</div>
-		<!--{else}-->			
-			<div class="failDone doneMt">&times; 很遗憾，失败啦！</div>
-		<!--{/if}-->
-	<!--{/if}-->
+	{{html_result | raw}}
 </div>
-{template c_footer.html}
-{template c_script.html}
+{{common_html['footer'] | raw}}
+{{common_html['script'] | raw}}
 </body>
 </html>
