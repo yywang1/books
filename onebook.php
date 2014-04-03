@@ -1,9 +1,5 @@
 <?
-include_once __DIR__ . '/includes/config.init.php';
-
-//{{{ common html code
-include_once __DIR__ . '/c_page.php';
-//}}}
+include_once __DIR__ . '/includes/global.init.php';
 
 $bid = isset($_REQUEST['bid']) && $_REQUEST['bid'] ? intval($_REQUEST['bid']) : 0;
 if($bid == 0) {
@@ -13,15 +9,11 @@ if($bid == 0) {
 //{{{ details
 include_once __DIR__ . '/includes/processor/OnebookProcessor.php';
 $onebook = new OnebookProcessor();
-$onebook->process(array(
+$tplArray['file'] = $onebook->process(array(
 		'container' => $container,
 		'bid' => $bid,
 	));
-$html = $onebook->render(array(
-		'container' => $container,
-		'common_html' => $common_html,
-	));
 
-echo $html;
+echo $container['twig']->render('onebook.html', $tplArray);
 
 ?>

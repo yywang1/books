@@ -3,58 +3,89 @@ include_once __DIR__ . '/BaseDao.php';
 
 class UserDao extends BaseDao{
 	
-	public function getBooksByBid($bid) {
+	public function getUserByUid($uid) {
 		$db = $this->db();
-		$sql = "SELECT * FROM books WHERE bid=$bid LIMIT 1";
-		$file = $db->fetchAssoc($sql);
-		return $file[0];
+		$sql = "SELECT * FROM users WHERE uid='$uid' LIMIT 1";
+		$user = $db->fetchAssoc($sql);
+		return $user;
 	}
 	
-	public function getTagsByBid($bid) {
+	public function getUserByUname($uname) {
 		$db = $this->db();
-		$sql = "SELECT * FROM tags WHERE bid=$bid LIMIT 1";
-		$tags = $db->fetchAssoc($sql);
-		return $tags[0];
+		$sql = "SELECT * FROM users WHERE uname='$uname' LIMIT 1";
+		$user = $db->fetchAssoc($sql);
+		return $user;
 	}
 	
-	public function getMiscByBidUid($bid, $uid) {
+	public function getUserByUemail($uemail) {
 		$db = $this->db();
-		$sql = "SELECT `mid`, `isupload`, `isdown`, `iseva` FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1";
-		$misc = $db->fetchAssoc($sql);
-		return $misc[0];
+		$sql = "SELECT * FROM users WHERE uemail='$uemail' LIMIT 1";
+		$user = $db->fetchAssoc($sql);
+		return $user;
+	}
+	
+	public function insertUser($user) {
+		$regMoney = 5; //注册时获取的财富
+		$regCtbt = 1; //注册时获取的贡献值
 		
-	}
-	
-	public function getBids($sql) {
 		$db = $this->db();
-		$bids = array();
-		$rows = $db->fetchAssoc($sql);
-		foreach($rows as $row) {
-			$bids[] = $row['bid'];
+		$sql = "INSERT INTO users(uname, uemail, upwd, umoney, uctbt, uvalid, ulasttime, uregtime) VALUES(
+			'" . $user['name'] . "',
+			'" . $user['email'] . "',
+			'" . $user['pwd'] . "',
+			'" . $regMoney . "',
+			'" . $regCtbt . "',
+			'1',
+			'" . date('Y-m-d H:i:s') . "',
+			'" . date('Y-m-d H:i:s') . "')";
+		if($db->query($sql)) {
+			$uid = mysql_insert_id();
+			$_SESSION['user'] = $this->getUserByUid($uid);
+			return true;
+		} else {
+			return false;
 		}
-		return $bids;
 	}
 	
-	public function getFileByBid($bid) {
-		$file = $this->getBooksByBid($bid);
-		$file['tags'] = $this->getTagsByBid($bid);
-		$file['misc'] = isLogin() ? $this->getMiscByBidUid($bid, $_SESSION['user']['uid']) : array();
-		$file['bsize'] = transSize($file['bsize']);		
-		$file['bpath'] = 'files/' . $file['bauthor'] . '/' . $file['bname'] . ' by ' . $file['bauthor'] . '.' . $file['bformat'];
-		$file['bsummary'] = dataToHtml($file['bsummary']);
-		$vars = $this->container['vars'];
-		$file['btype_lang'] = $vars['attr_type'][$file['btype']];
-		$file['bstyle_lang'] = $vars['attr_style'][$file['bstyle']];
-		return $file;
+	function setULastDataByUid($uid) {
+		$db = $this->db();
+		$sql = "UPDATE users SET ulasttime='". date('Y-m-d H:i:s') ."' WHERE uid=" . $uid;
+		$db->query($sql);
 	}
 	
-	public function getFilesByBids($bids) {
-		$fileList = array();
-		foreach($bids as $bid) {
-			$fileList[] = $this->getFileByBid($bid);
+	function setUpwdByUid($upwd, $uid) {
+		$db = $this->db();
+		$sql = "UPDATE users SET upwd='$upwd' WHERE uid='$uid'";
+		return ($db->query($sql)) ? true : false;
+	}
+	
+	function setMoneyAndCtbt($uid, $addMoney, $addCtbt) {
+		$db = $this->db();
+		$user = $this->getUserByUid($uid);
+		if(! empty($user)) {
+			$umoney = $user['umoney'] + $addMoney;
+			$uctbt = $user['uctbt'] + $addCtbt;
+			$sql = "UPDATE users SET 
+				umoney='$umoney',
+				uctbt='$uctbt'	
+				WHERE uid=" . $uid;
+			$db->query($sql);
 		}
-		return $fileList;
 	}
 	
+	public function verifyUname($uname) {
+		$db = $this->db();
+		$sql = "SELECT 1 FROM users WHERE uname = '$uname' LIMIT 1";
+		$isExist = $db->checkExist($sql);
+		return $isExist;
+	}
+	
+	public function verifyUemail($uemail) {
+		$db = $this->db();
+		$sql = "SELECT 1 FROM users WHERE uemail = '$uemail' LIMIT 1";
+		$isExist = $db->checkExist($sql);
+		return $isExist;
+	}
+
 }
 ?>

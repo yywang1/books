@@ -1,6 +1,4 @@
 <?php
-include_once __DIR__ . '/config.init.php';
-
 function p() {
 	$argvs = func_get_args();
 	echo "<div style=\"text-align: left;\">\r\n";
@@ -13,11 +11,11 @@ function p() {
 }
 
 function redirect($url, $die = true) {
-	if (strpos($url, 'error.php') !== false) {
+	if(strpos($url, 'error.php') !== false) {
 		$url .= '&url=' . urlencode($_SERVER['REQUEST_URI']);
 	}
 	header("location: $url");
-	if ($die)
+	if($die)
 		die();
 }
 
@@ -162,6 +160,26 @@ function isLogin() {
 	} else {
 		return false;
 	}
+}
+
+function getTplArray($container) {
+	$tplArray = array(
+			'WEB_ROOT' => $container['WEB_ROOT'],
+			'CSS_PATH' => $container['path']['css'],
+			'JS_PATH' => $container['path']['js'],
+			'IMG_PATH' => $container['path']['img'],
+			'DEBUG_MODE' => $container['siteConf']['DEBUG_MODE'],
+			'REQUEST_URI' => urlencode($_SERVER['REQUEST_URI']),
+		);
+
+	if(isLogin()) {
+		$tplArray['is_login'] = true;
+		$tplArray['user_name'] = $_SESSION['user']['uname'];
+	} else {
+		$tplArray['is_login'] = false;
+	}
+	
+	return $tplArray;
 }
 
 ?>

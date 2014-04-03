@@ -24,11 +24,13 @@ defined('SESSION_NAME') || define('SESSION_NAME', 'AIRID');
 defined('SESSION_NAME') && @ini_set('session.name', SESSION_NAME);
 session_start();
 
+error_reporting($DEBUG_MODE ? E_ALL : E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+
 //Initializer
 require_once __DIR__ . '../../vender/Pimple.php';
 $container = new Pimple();
 
-$container['ROOT_PATH'] = str_replace('includes/config.init.php', '', str_replace('\\', '/', __FILE__));
+$container['ROOT_PATH'] = str_replace('includes/global.init.php', '', str_replace('\\', '/', __FILE__));
 if ($_SERVER['DOCUMENT_ROOT'] != "") {
 	$WEB_ROOT = substr(realpath(dirname(__FILE__) . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
 	if (trim($WEB_ROOT, '/\\')) {
@@ -51,5 +53,8 @@ $container = $baseinit->initBase($container);
 
 //common functions
 require_once __DIR__ . '/global.func.php';
+
+//variable for common parts of pages
+$tplArray = getTplArray($container);
 
 ?>

@@ -5,15 +5,15 @@ $db_name = "books";
 $db_user = "root";
 $db_pass = "root";
 
-// For development or For production
-$GLOBALS['JS_DEBUG'] = true;
-
 /*themes:
   default        - seajs and lesscss
   seajs_standard - standard seajs without lesscss
   seajs_custom   - customseajs without lesscss
 */
 $theme = 'default';
+
+// For development or For production
+$DEBUG_MODE = true;
 
 // SITE_DOMAIN
 defined('SITE_DOMAIN') || define('SITE_DOMAIN', 'books.com');

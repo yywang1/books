@@ -1,5 +1,5 @@
 <?
-include_once __DIR__ . '/includes/config.init.php';
+include_once __DIR__ . '/includes/global.init.php';
 
 //{{{ common html code
 include_once __DIR__ . '/c_page.php';

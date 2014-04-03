@@ -5,10 +5,10 @@
 {% include 'common/link.html' %}
 </head>
 
-<body>
+<body data-key="{{data_key}}">
 {% include 'common/header.html' %} 
 <div class="main_form">
-	{{html_result | raw}}
+    {{html_page_content | raw}}
 </div>
 {% include 'common/footer.html' %}
 {% include 'common/script.html' %}

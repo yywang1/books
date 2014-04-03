@@ -17,11 +17,11 @@ seajs.config({
 	preload: ['jquery']
 });
 
-<!--{if $GLOBALS['JS_DEBUG']}-->	
+{% if DEBUG_MODE %}
 	seajs.use('loc/main');
-<!--{else}-->
+{% else %}
 	seajs.use('main');
-<!--{/if}-->
+{% endif %}
 </script>
 
 <script type="text/javascript">

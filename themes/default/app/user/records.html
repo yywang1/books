@@ -1,42 +1,22 @@
-<!doctype html>
-<html>
-<head>
-<title>Ava is reading...</title>
-{template ../c_link.html}
-</head>
-
-<body>
-{template ../c_header.html}
-<div class="main_browse">
-	{template c_sidebar.html}
-	<div class="col2Main padMain">
-		<h1>
-			{$acts[$act]}记录
-		</h1>
-		<div class="fileList bbord">
-			<h3>共{$acts[$act]} 6 个文件，文件列表如下：</h3>
-			<table>
-				<thead>
-					<tr>
-						<td>书名</td>
-						<td>作者</td>
-					</tr>
-				</thead>
-				<tbody>
-					<!--{loop $fileList $file}-->
-					<tr>
-						<td><a href="{$WEB_ROOT}details.php?bid={$file['bid']}" target="_blank">{$file['bname']}</a></td>
-						<td>{$file['bauthor']}</td>
-					</tr>
-					<!--{/loop}-->
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="clear">
-	</div>
+<h1>
+	{{act_translate}}记录
+</h1>
+<div class="fileList bbord ntbord">
+	<h3>共{{act_translate}} {{total}} 个文件，文件列表如下：</h3>
+	<table>
+		<thead>
+			<tr>
+				<td>书名</td>
+				<td>作者</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for file in fileList %}
+			<tr>
+				<td><a href="{{WEB_ROOT}}details.php?bid={{file['bid']}}" target="_blank">{{file['bname']}}</a></td>
+				<td>{{file['bauthor']}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
-{template ../c_footer.html}
-{template ../c_script.html}
-</body>
-</html>

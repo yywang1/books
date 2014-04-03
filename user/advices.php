@@ -1,10 +1,11 @@
 <?
-include_once __DIR__ . '../../includes/user.func.php';
+include_once __DIR__ . '../../includes/global.init.php';
 
-if(! checkLogin()) {
-	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+if(! isLogin()) {
+	redirect($container['WEB_ROOT'] . "login.php?back=" . $_SERVER['PHP_SELF']);
 }
 
-echo Zandy_Template::outString('user/advices.html', $siteConf['tplDir'], $siteConf['cacheDir']);
+$tplArray['html_main'] = $container['twig']->render('user/advices.html', array());
 
+echo $container['twig']->render('user/c_user_tpl.html', $tplArray);
 ?>

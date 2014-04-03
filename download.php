@@ -1,5 +1,5 @@
 <?
-include_once __DIR__ . '/includes/config.init.php';
+include_once __DIR__ . '/includes/global.init.php';
 
 $bid = isset($_REQUEST['bid']) && $_REQUEST['bid'] ? intval($_REQUEST['bid']) : 0;
 if($bid == 0) {
@@ -7,15 +7,19 @@ if($bid == 0) {
 }
 
 if(! isLogin()) {
-	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+	redirect($container['WEB_ROOT'] . "login.php?back=" . $_SERVER['PHP_SELF']);
 }
-
 
 $file = $container['filedao']->getFileByBid($bid);
 $filePath = $container['ROOT_PATH'] . $file['bpath'];
 $fileName = basename($filePath);
 
 if(file_exists(toGb($filePath))) {
+	
+	$uid = $_SESSION['user']['uid'];
+	$container['userdao']->setMoneyAndCtbt($uid, -1, 1); //上传新书，财富+2，贡献+1
+	$container['miscdao']->setRecord('down', $bid, $uid);
+
 	header("Content-type: text/plain");
 	
 	$userAgent = $_SERVER["HTTP_USER_AGENT"];
@@ -28,8 +32,6 @@ if(file_exists(toGb($filePath))) {
 	}
 
 	readfile(toGb($filePath));
-	
-	doUserRecord('isdown', $bid, $_SESSION['user']['uid']);
 	
 } else {
 	die();

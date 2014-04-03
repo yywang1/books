@@ -1,27 +1,28 @@
 <?
-include_once __DIR__ . '/c_page.php';
-$tplArray = array('common_html' => $common_html);
+include_once __DIR__ . '/includes/global.init.php';
 
 function createTables($container) {
 		
 	$db = $container['db'];
+	$attr_tags = $container['vars']['attr_tags'];
 	
 	//书籍信息 books
 	$create_books_sql = "CREATE TABLE IF NOT EXISTS books(
 		bid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(bid),
-		bname varchar(100),
-		bauthor varchar(100),
-		bsummary text,
-		brole varchar(100),
-		bsize int, 
-		btype int(2),
-		bstyle int(2),
-		beva int,
-		bexist boolean,
-		bformat varchar(10),
-		borig varchar(200),
-		bdate date
+		bname varchar(100) comment '书名',
+		bauthor varchar(100) comment '作者',
+		bsummary text comment '简介',
+		brole varchar(100) comment '主角',
+		bsize int comment '文件体积', 
+		btype int(2) comment '类型',
+		bstyle int(2) comment '文风',
+		beva int comment '好评数',
+		bexist boolean comment '文件是否未删除',
+		bformat varchar(10) comment '文件格式',
+		borig varchar(200) comment '原创网址',
+		uid varchar(20) comment '上传者的uid',
+		btime timestamp comment '文件上传的时间'
 		)";
 	if(! $db->query($create_books_sql)){
 		return 'books (create)';
@@ -34,7 +35,7 @@ function createTables($container) {
 		while($row = mysql_fetch_row($res)) {
 			$existFields[] = $row[0];
 		}
-		foreach($db->attr_tags as $key=>$tag) {
+		foreach($attr_tags as $key=>$tag) {
 			if(!in_array($key, $existFields)) {
 				$alter_tags_sql = "alter table tags add " . $key . " boolean";
 				if(! $db->query($alter_tags_sql)){
@@ -44,8 +45,8 @@ function createTables($container) {
 		}
 	} else {
 		$create_tags_sql = "CREATE TABLE IF NOT EXISTS tags(bid int NOT NULL, PRIMARY KEY(bid),";
-		foreach($db->attr_tags as $key=>$tag) {
-			if($key != ('t' . count($db->attr_tags))) {
+		foreach($attr_tags as $key=>$tag) {
+			if($key != ('t' . count($attr_tags))) {
 				$create_tags_sql .= $key . ' boolean,';
 			} else {
 				$create_tags_sql .= $key . ' boolean)';
@@ -66,8 +67,8 @@ function createTables($container) {
 		umoney int,
 		uctbt int,
 		uvalid boolean,
-		ulastdate date,
-		uregdate date
+		ulasttime timestamp,
+		uregtime timestamp
 		)";
 	if(! $db->query($create_users_sql)){
 		return 'users (create)';
@@ -79,12 +80,10 @@ function createTables($container) {
 		PRIMARY KEY(mid),
 		bid int,
 		uid int,
-		isupload boolean,
-		upload_date date,
 		isdown boolean,
-		down_date date,
+		downtime timestamp,
 		iseva boolean,
-		eva_date date
+		evatime timestamp
 		)";
 	if(! $db->query($create_misc_sql)){
 		return 'misc (create)';
@@ -95,7 +94,7 @@ function createTables($container) {
 		sid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(sid),
 		skey varchar(50),
-		stimes int
+		stime timestamp
 		)";
 	if(! $db->query($create_searches_sql)){
 		return 'searches (create)';
@@ -112,6 +111,6 @@ if($initResult === true) {
 	$tplArray['html_result'] = '<div class="failDone tac doneMt">&times; 网站初始化失败: ' + initResult + '</div>';
 }
 
-echo $twig->render('result.html', $tplArray);
+echo $container['twig']->render('result.html', $tplArray);
 
 ?>

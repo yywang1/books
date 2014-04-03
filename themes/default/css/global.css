@@ -958,6 +958,11 @@ body {
 .fileList.bbord {
   border-bottom: solid 1px #dddddd;
 }
+.fileList.ntbord {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
 .optionList li {
   display: inline-block;
   *display: inline;

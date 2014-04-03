@@ -17,12 +17,12 @@ class FileListProcessor implements BaseProcessor {
 		$fileDao = $container['filedao'];
 		$sqlGetIds = '';
 		if($dataKey == 'index') {
-			$sqlGetIds = "SELECT bid,bname FROM books WHERE bexist = 1 ORDER BY bdate DESC LIMIT 20";
+			$sqlGetIds = "SELECT bid,bname FROM books WHERE bexist = 1 ORDER BY btime DESC LIMIT 20";
 			$bids = $fileDao->getBids($sqlGetIds);
 		}
 		if($dataKey == 'browse') {
 			if($sortBy == 1) {
-				$sortByEnd = " ORDER BY bdate DESC";
+				$sortByEnd = " ORDER BY btime DESC";
 			} elseif($sortBy == 2) {
 				$sortByEnd = " ORDER BY beva DESC";
 			} elseif($sortBy == 3) {

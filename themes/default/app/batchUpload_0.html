@@ -2,11 +2,11 @@
 <html>
 <head>
 <title>Ava is reading...</title>
-{% include 'common/link.html' %}
+{template c_link.html}
 </head>
 
-<body data-key="batchUpload">
-{% include 'common/header.html' %} 
+<body>
+{template c_header.html}
 <div class="main_form">
     <h1>批量上传</h1>
 	<div class="related"><a href="{$WEB_ROOT}upload.php">单个文件上传</a></div>
@@ -28,22 +28,22 @@
                             <input type="hidden" name="btype" value="0">
                             <span>-</span>
 							<ul>
-								{% for type in attr_type %}
-								<li>{{type}}</li>
-								{% endfor %}
+								<!--{loop $attr_type $type}-->
+                                <li>{$type}</li>
+								<!--{/loop}-->
                             </ul>
                         </div></td>						
-                    <td><span id="btypeTip" class="tip"></span></td>
+                    <td><span id="btypeTip"></span></td>
                 </tr>
 				<tr>
 					<th>标签：</th>
 					<td colspan="2">
 						<ul class="optionList">
-							{% for key, tag in attr_tags %}
-							<li><input type="checkbox" name="btags[]" value="{{key}}"> <label>{{tag}}</label></li>
-							{% endfor %}
+							<!--{loop $attr_tags $key $tag}-->
+							<li><input type="checkbox" name='btags[]' value="{$key}"> <label>{$tag}</label></li>
+							<!--{/loop}-->
 						</ul>
-						<p id="btagsTip" class="tip"></p>
+						<p id="btagsTip"></p>
 					</td>
 				</tr>
 				<tr>
@@ -53,7 +53,16 @@
 		</div>
     </form>	
 </div>
-{% include 'common/footer.html' %}
-{% include 'common/script.html' %}
+{template c_footer.html}
+{template c_script.html}
+<script>
+<!--{if $GLOBALS['JS_DEBUG']}-->	
+	seajs.use('loc/batchUpload');
+<!--{else}-->
+	seajs.use('global', function () {
+		seajs.use(['global/global/0.0.1/batchUpload']);
+	})
+<!--{/if}-->
+</script>
 </body>
 </html>

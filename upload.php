@@ -1,72 +1,53 @@
 <?
-include_once __DIR__ . '/includes/file.func.php';
-include_once __DIR__ . '/includes/user.func.php';
+include_once __DIR__ . '/includes/global.init.php';
 
-if(! checkLogin()) {
-	redirect($WEB_ROOT . "login.php?back=" . $_SERVER['PHP_SELF']);
+if(! isLogin()) {
+	redirect($container['WEB_ROOT'] . "login.php?back=" . $_SERVER['PHP_SELF']);
 }
 
 $act = isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '';
 
+//{{{ Upload Processor
+include_once __DIR__ . '/includes/processor/UploadProcessor.php';
+$uploador = new UploadProcessor();
+//}}}
+
 switch ($act) {
 	case 'verifyAtta':
-		if ($_FILES["attachment"]["error"] > 0) {
-			$data = array(
-				'code' => 0,
-				'msg' => $_FILES["attachment"]["error"]
-			);
-			echo json_encode($data);
-			die();
-		} else {
-			$attaInfo = verifyFile($_FILES["attachment"]["name"]);
-			if($attaInfo['code'] === 0) {
-				$tempPath = ROOT_PATH . 'temp/' . $attaInfo['bname'] . ' by ' . $attaInfo['bauthor'] . '.' . $attaInfo['bformat'];
-				move_uploaded_file($_FILES["attachment"]["tmp_name"], toGb($tempPath));
-				$data = array(
-					'code' => 0,
-					'msg' => $attaInfo['msg'],
-					'bname' => $attaInfo['bname'],
-					'bauthor' => $attaInfo['bauthor'],
-					'bformat' => $attaInfo['bformat'],
-					'bsize' => $_FILES["attachment"]["size"],
-					'bpath' => $tempPath
-				);
-			} else {
-				$data = array(
-					'code' => $attaInfo['code'],
-					'msg' => $attaInfo['msg']
-				);
-			}
-			
-			echo json_encode($data);
-			die();
-		}
+		$result = $uploador->process(array(
+				'container' => $container,
+				'act' => $act,
+				'attachment' => $_FILES["attachment"],
+			));
+		echo json_encode($result);
+		die();
 		break;
 	case 'uploadNew':
-		$file = array();
-		$file['bname'] = $_POST['bname'];
-		$file['bauthor'] = $_POST['bauthor'];
-		$file['bformat'] = $_POST['bformat'];
-		$file['bsize'] = $_POST['bsize'];
-		$file['bsummary'] = $_POST['bsummary'];
-		$file['brole'] = $_POST['brole'];
-		$file['btype'] = $_POST['btype'];
-		$file['bstyle'] = $_POST['bstyle'];
-		$file['borig'] = $_POST['borig'];
-		$file['btags'] = isset($_POST['btags']) ? $_POST['btags'] : array();
-		$file['bpath'] =  $_POST['bpath'];
-		$bid = insertFile($file);
+		$file = $_POST['bookInfo'];
+		$file['bname'] = trim($file['bname']);
+		$file['bauthor'] = trim($file['bauthor']);
+		$file['bsummary'] = trim($file['bsummary']);
+		$file['brole'] = trim($file['brole']);
+		$file['borig'] = trim($file['borig']);
+		$bid = $uploador->process(array(
+				'container' => $container,
+				'act' => $act,
+				'file' => $file,
+			));
 		if(! $bid) {
-			$uploadResult = false;
+			$tplArray['html_uploadResult'] = '<div class="failDone tac">&times; 上传失败</div>'; 
 		} else {
-			$uploadResult = true;
-			doUserRecord('isupload', $bid, $_SESSION['user']['uid']);
+			$tplArray['html_uploadResult'] = '<div class="sucDone tac">&radic; 上传成功</div>';
 		}
 		break;
 	default:
 		break;
 }
 
-echo Zandy_Template::outString('upload.html', $siteConf['tplDir'], $siteConf['cacheDir']);
+$tplArray['attr_type'] = $container['vars']['attr_type'];
+$tplArray['attr_style'] = $container['vars']['attr_style'];
+$tplArray['attr_tags'] = $container['vars']['attr_tags'];
+
+echo $container['twig']->render('upload.html', $tplArray);
 
 ?>

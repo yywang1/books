@@ -27,41 +27,4 @@ define(function(require, exports, module) {
 		}		
 	};
 	
-	//upload and edit file
-	module.exports.checkFileForm = function() {
-		var bname = $('input[name="bname"]');
-		var bauthor = $('input[name="bauthor"]');
-		var btype = $('input[name="btype"]');
-		var btags = $('input[name="btags[]"]:checked');
-		if(! bname.val()) {
-			$('#bnameTip').html('请填写书名').addClass('error').show();
-			bname.focus(function() {
-				$('#bnameTip').html('').removeClass('error').hide();
-			})
-			return false;
-		}
-		if(! bauthor.val()) {
-			$('#bauthorTip').html('请填写作者').addClass('error').show();
-			bauthor.focus(function() {
-				$('#bauthorTip').html('').removeClass('error').hide();
-			});
-			return false;
-		}
-		if(btype.val() == 0) {
-			$('#btypeTip').html('请选择分类').addClass('error').show();
-			btype.next().mousedown(function() {
-				$('#btypeTip').html('').removeClass('error').hide();
-			});
-			return false;
-		}
-		if(btags.length > 5) {
-			$('#btagsTip').html('标签不能超过5个').addClass('error').show();
-			btags.click(function() {
-				$('#btagsTip').html('').removeClass('error').hide();
-			});
-			return false;
-		}		
-		return true;
-	};
-	
 });

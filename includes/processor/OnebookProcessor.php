@@ -29,16 +29,11 @@ class OnebookProcessor implements BaseProcessor {
 			}
 		}
 		$file['filePreview'] = $filePreview;
-		$this->file = $file;
+		return $file;
 	}
 	
     public function render($params = array()) {
-		foreach ($params as $key => $param) {
-            $$key = $param;
-        }
-		$params['WEB_ROOT'] = $container['WEB_ROOT'];
-		$params['file'] = $this->file;
-		return $container['twig']->render("onebook.html", $params);
+		return true;
 	}
 }
 ?>

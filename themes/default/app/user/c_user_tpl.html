@@ -5,19 +5,15 @@
 {% include 'common/link.html' %}
 </head>
 
-<body data-key="browse">
+<body data-key="{{data_key}}">
 {% include 'common/header.html' %} 
 <div class="main_browse">
-    <div class="sidebar">
-		{{html_filterForm | raw}}
-		{{html_keyForm | raw}}
-		{{html_hotSearch | raw}}
-    </div>
-    <div class="col2Main">
-		{{html_fileList | raw}}
-    </div>
-    <div class="clear">
-    </div>
+	{% include 'user/c_sidebar.html' %} 
+	<div class="col2Main padMain">
+		{{html_main | raw}}
+	</div>
+	<div class="clear">
+	</div>
 </div>
 {% include 'common/footer.html' %}
 {% include 'common/script.html' %}

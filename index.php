@@ -1,10 +1,5 @@
 <?
-include_once __DIR__ . '/includes/config.init.php';
-
-//{{{ common html code
-include_once __DIR__ . '/c_page.php';
-$tplArray = array('common_html' => $common_html);
-//}}}
+include_once __DIR__ . '/includes/global.init.php';
 
 //{{{ fileList
 include_once __DIR__ . '/includes/processor/FileListProcessor.php';

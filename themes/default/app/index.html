@@ -2,17 +2,17 @@
 <html>
 <head>
 <title>Ava is reading...</title>
-{{common_html['link'] | raw}}
+{% include 'common/link.html' %}
 </head>
 
 <body data-key="index">
-{{common_html['header'] | raw}}
+{% include 'common/header.html' %} 
 <div class="main_home">
 	{{html_quickNav | raw}}
     {{html_hotSearch | raw}}
     {{html_fileList | raw}}
 </div>
-{{common_html['footer'] | raw}}
-{{common_html['script'] | raw}}
+{% include 'common/footer.html' %}
+{% include 'common/script.html' %} 
 </body>
 </html>
