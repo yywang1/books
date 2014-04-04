@@ -8,8 +8,8 @@
 <body data-key="index">
 {% include 'common/header.html' %} 
 <div class="main_home">
-	{{html_quickNav | raw}}
-    {{html_hotSearch | raw}}
+	{% include 'common/quickNav.html' %} 
+	{% include 'common/hotSearch.html' %} 
     {{html_fileList | raw}}
 </div>
 {% include 'common/footer.html' %}

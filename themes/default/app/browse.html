@@ -9,9 +9,9 @@
 {% include 'common/header.html' %} 
 <div class="main_browse">
     <div class="sidebar">
-		{{html_filterForm | raw}}
-		{{html_keyForm | raw}}
-		{{html_hotSearch | raw}}
+		{% include 'browse/filterForm.html' %} 
+		{% include 'browse/keyForm.html' %} 
+		{% include 'common/hotSearch.html' %} 
     </div>
     <div class="col2Main">
 		{{html_fileList | raw}}

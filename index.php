@@ -14,17 +14,8 @@ $tplArray['html_fileList'] = $fileList->render(array(
 	));
 //}}}
 
-//{{{ quickNav
-$tplArray['html_quickNav'] = $container['twig']->render('mod/quickNav.html', array(
-		'WEB_ROOT' => $container['WEB_ROOT'],
-	));
-//}}}
-
 //{{{ hotSearch
-$tplArray['html_hotSearch'] = $container['twig']->render('mod/hotSearch.html', array(
-		'WEB_ROOT' => $container['WEB_ROOT'],
-		'modClass' => 'hotSearch',
-	));
+$tplArray['modClass'] = 'hotSearch';
 //}}}
 
 echo $container['twig']->render('index.html', $tplArray);

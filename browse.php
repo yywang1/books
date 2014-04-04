@@ -2,24 +2,12 @@
 include_once __DIR__ . '/includes/global.init.php';
 
 //{{{ 类型、文风筛选
-$tplArray['html_filterForm'] = $container['twig']->render('browse/filterForm.html', array(
-		'WEB_ROOT' => $container['WEB_ROOT'],
-		'attr_type' => $container['vars']['attr_type'],
-		'attr_style' => $container['vars']['attr_style'],
-	));
-//}}}
-
-//{{{ 关键字搜索
-$tplArray['html_keyForm'] = $container['twig']->render('browse/keyForm.html', array(
-		'WEB_ROOT' => $container['WEB_ROOT'],
-	));
+$tplArray['attr_type'] = $container['vars']['attr_type'];
+$tplArray['attr_style'] = $container['vars']['attr_style'];
 //}}}
 
 //{{{ 热门搜索：
-$tplArray['html_hotSearch'] = $container['twig']->render('mod/hotSearch.html', array(
-		'WEB_ROOT' => $container['WEB_ROOT'],
-		'modClass' => 'sbHot',
-	));
+$tplArray['modClass'] = 'sbHot';
 //}}}
 
 //{{{ fileList
