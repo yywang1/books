@@ -2,48 +2,29 @@ define(function(require, exports, module) {
 
 	var $ = require('jquery');
 	
+	require('./mod/fileList');
+	
 	//下拉框
 	require('./mod/selectWidget');
 	$('.sele').each(function () {
 		$(this).selectWidget();
 	});
-	
-	//关键字搜索输入框
-	var InputVal = require('./mod/inputVal');
-	var sbkey = new InputVal('input[name="sbkey"]', '请输入关键字');
-	sbkey.init();
-		
-	//表单验证
-	var fc = require('./mod/formCheck');
-	
+
 	$('#filterForm').submit(function() {
-		if(! fc.checkFilterForm()) {
+		if($('input[name="ftype"]').val() == 0 && $('input[name="fstyle"]').val() == 0) {
+			alert('请选择筛选条件');
 			return false;
 		}
+		return true;
 	});
 	
 	$('#keyForm').submit(function() {
-		if(! fc.checkKeyForm()) {
+		var sbkey = $('input[name="sbkey"]').val();
+		if(! sbkey) {
+			alert('请输入关键字');
 			return false;
 		}
+		return true;
 	});
-
-	var File = require('./mod/file');
-	
-	//喜欢
-	$('.eva').click(function() {
-		var liId = $(this).parents('li').attr('id');
-		var bid = parseInt(liId.replace('nov_', ''));
-		var f = new File(bid);
-		f.doLike();
-	});
-	
-	//删除文件
-	$('.btnDelFile').click(function() {
-		var liId = $(this).parents('li').attr('id');
-		var bid = parseInt(liId.replace('nov_', ''));
-		var f = new File(bid);
-		f.doDelete();
-	});	
 
 });

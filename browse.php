@@ -2,7 +2,7 @@
 include_once __DIR__ . '/includes/global.init.php';
 
 //{{{ 类型、文风筛选
-$tplArray['html_filterForm'] = $container['twig']->render('mod/browse/filterForm.html', array(
+$tplArray['html_filterForm'] = $container['twig']->render('browse/filterForm.html', array(
 		'WEB_ROOT' => $container['WEB_ROOT'],
 		'attr_type' => $container['vars']['attr_type'],
 		'attr_style' => $container['vars']['attr_style'],
@@ -10,7 +10,7 @@ $tplArray['html_filterForm'] = $container['twig']->render('mod/browse/filterForm
 //}}}
 
 //{{{ 关键字搜索
-$tplArray['html_keyForm'] = $container['twig']->render('mod/browse/keyForm.html', array(
+$tplArray['html_keyForm'] = $container['twig']->render('browse/keyForm.html', array(
 		'WEB_ROOT' => $container['WEB_ROOT'],
 	));
 //}}}

@@ -117,7 +117,7 @@ class FileListProcessor implements BaseProcessor {
 			$filesTotal = $container['db']->getCount($sqlTotal);
 			$pageTotal = ($filesTotal == 0) ? 0 : ceil($filesTotal / $pageSize);
 			$this->html_pageString = getPageString($page, $url, $filesTotal, $pageSize);			
-			$this->html_listFilter = $container['twig']->render("mod/browse/listFilter.html", array(
+			$this->html_listFilter = $container['twig']->render("browse/listFilter.html", array(
 					'sortByUrl' => remove_param_in_url($url, array('sortby', 'page'), true),
 					'sortBy' => $sortBy,
 					'filesTotal' => $filesTotal,
