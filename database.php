@@ -7,7 +7,7 @@ function createTables($container) {
 	$attr_tags = $container['vars']['attr_tags'];
 	
 	//书籍信息 books
-	$create_books_sql = "CREATE TABLE IF NOT EXISTS books(
+	$create_books = "CREATE TABLE IF NOT EXISTS books(
 		bid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(bid),
 		bname varchar(100) comment '书名',
@@ -17,14 +17,13 @@ function createTables($container) {
 		bsize int comment '文件体积', 
 		btype int(2) comment '类型',
 		bstyle int(2) comment '文风',
-		beva int comment '好评数',
 		bexist boolean comment '文件是否未删除',
 		bformat varchar(10) comment '文件格式',
 		borig varchar(200) comment '原创网址',
 		uid varchar(20) comment '上传者的uid',
 		btime timestamp comment '文件上传的时间'
 		)";
-	if(! $db->query($create_books_sql)){
+	if(! $db->query($create_books)){
 		return 'books (create)';
 	}
 	
@@ -37,66 +36,87 @@ function createTables($container) {
 		}
 		foreach($attr_tags as $key=>$tag) {
 			if(!in_array($key, $existFields)) {
-				$alter_tags_sql = "alter table tags add " . $key . " boolean";
-				if(! $db->query($alter_tags_sql)){
+				$alter_tags = "alter table tags add " . $key . " boolean";
+				if(! $db->query($alter_tags)){
 					return 'tags (alter)';
 				}
 			}
 		}
 	} else {
-		$create_tags_sql = "CREATE TABLE IF NOT EXISTS tags(bid int NOT NULL, PRIMARY KEY(bid),";
+		$create_tags = "CREATE TABLE IF NOT EXISTS tags(bid int NOT NULL, PRIMARY KEY(bid),";
 		foreach($attr_tags as $key=>$tag) {
 			if($key != ('t' . count($attr_tags))) {
-				$create_tags_sql .= $key . ' boolean,';
+				$create_tags .= $key . ' boolean,';
 			} else {
-				$create_tags_sql .= $key . ' boolean)';
+				$create_tags .= $key . ' boolean)';
 			}
 		}
-		if(! $db->query($create_tags_sql)){
+		if(! $db->query($create_tags)){
 			return 'tags (create)';
 		}
 	}
 	
+	//书籍操作总数统计 books_extra
+	$create_books_extra = "CREATE TABLE IF NOT EXISTS books_extra(
+		bid int NOT NULL,
+		PRIMARY KEY(bid),
+		beva int comment '好评数',
+		bdown int comment '下载数',
+		bbrowse int comment '浏览数'
+		)";
+	if(! $db->query($create_books_extra)){
+		return 'books_extra (create)';
+	}
+	
 	//用户表 users （uctbt:贡献、参与度）
-	$create_users_sql = "CREATE TABLE IF NOT EXISTS users(
+	$create_users = "CREATE TABLE IF NOT EXISTS users(
 		uid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(uid),
 		uname varchar(20),
 		uemail varchar(100),
 		upwd varchar(16),
-		umoney int,
-		uctbt int,
-		uvalid boolean,
-		ulasttime timestamp,
+		uexist boolean,
 		uregtime timestamp
 		)";
-	if(! $db->query($create_users_sql)){
+	if(! $db->query($create_users)){
 		return 'users (create)';
 	}
 	
+	//用户经常变动的数据 users_extra
+	$create_users_extra = "CREATE TABLE IF NOT EXISTS users_extra(
+		uid int NOT NULL,
+		PRIMARY KEY(uid),
+		umoney int comment '财富',
+		uctbt int comment '贡献',
+		ulasttime timestamp comment '上次登录时间'
+		)";
+	if(! $db->query($create_users_extra)){
+		return 'users_extra (create)';
+	}
+	
 	//用户与书籍的关联 misc
-	$create_misc_sql = "CREATE TABLE IF NOT EXISTS misc(
+	$create_misc = "CREATE TABLE IF NOT EXISTS misc(
 		mid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(mid),
 		bid int,
 		uid int,
-		isdown boolean,
-		downtime timestamp,
-		iseva boolean,
-		evatime timestamp
+		mdown boolean,
+		mdowntime timestamp,
+		meva boolean,
+		mevatime timestamp
 		)";
-	if(! $db->query($create_misc_sql)){
+	if(! $db->query($create_misc)){
 		return 'misc (create)';
 	}
 	
 	//搜索 searches
-	$create_searches_sql = "CREATE TABLE IF NOT EXISTS searches(
+	$create_searches = "CREATE TABLE IF NOT EXISTS searches(
 		sid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(sid),
 		skey varchar(50),
 		stime timestamp
 		)";
-	if(! $db->query($create_searches_sql)){
+	if(! $db->query($create_searches)){
 		return 'searches (create)';
 	}
 	
@@ -108,7 +128,7 @@ $initResult = createTables($container);
 if($initResult === true) {
 	$tplArray['html_result'] = '<div class="sucDone tac doneMt">&radic; 网站初始化成功</div>';
 } else {
-	$tplArray['html_result'] = '<div class="failDone tac doneMt">&times; 网站初始化失败: ' + initResult + '</div>';
+	$tplArray['html_result'] = '<div class="failDone tac doneMt">&times; 网站初始化失败: ' + $initResult + '</div>';
 }
 
 echo $container['twig']->render('result.html', $tplArray);

@@ -5,18 +5,18 @@
 {% include 'common/link.html' %}
 </head>
 
-<body data-key="details">
+<body data-key="index">
 {% include 'common/header.html' %} 
 <div class="main_form">
 	{% if file|length != 0 %}
     <div class="articleTitle">
 		<h1>{{file['bname']}}</h1>
-		<div class="heat" id="evaWrap_{{file['bid']}}">
-			热度：<span class="evaCount">{{file['beva']}}</span>
-			{% if file['iseva'] %}
-			<span class="eva eva_1" title="取消喜欢"></span>
+		<div class="heat">
+			热度：<span class="eva_count" id="eva_count_{{file['bid']}}">{{file['beva']}}</span>
+			{% if file['misc']['meva'] %}
+			<span class="eva eva_1" title="取消喜欢" id="eva_{{file['bid']}}"></span>
 			{% else %}
-			<span class="eva" title="喜欢"></span>
+			<span class="eva" title="喜欢" id="eva_{{file['bid']}}"></span>
 			{% endif %}
 		</div>
 	</div>

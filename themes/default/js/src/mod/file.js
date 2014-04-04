@@ -2,37 +2,32 @@ define(function(require, exports, module) {
 
 	var $ = require('jquery');
 	
-	function File(bid) {
-		 this.bid = parseInt(bid);
-		 this.container = $('#nov_' + bid);
-		 this.evaWrap = $('#evaWrap_' + bid);
-		 this.backUrl = encodeURI(location.href);
-	}
+	function File() {}
 	module.exports = File;
 	
 	//喜欢或取消喜欢
-	File.prototype.doLike = function() {
-		var nov = this;
-		var bid = nov.bid;
-		var evaWrap = nov.evaWrap;
+	File.prototype.setEva = function(bid) {
+		var back_url = encodeURI(location.href);
+		var elem_eva = document.getElementById('eva_' + bid);
+		var elem_count = document.getElementById('eva_count_' + bid);
 		$.ajax({
 			type: 'POST',
-			url: '../../../ajax.php',
+			url: webData.WEB_ROOT + 'ajax.php',
 			dataType: 'json',
-			data: {'act':'doLike','bid':bid},
+			data: {'act':'setEva','bid':bid},
 			success: function(r){
 				if(r.code == 0) {
-					var evaCount = parseInt(evaWrap.find('.evaCount').html());
-					if(r.iseva == 1) {
-						evaCount ++;
-						evaWrap.find('.eva').addClass('eva_1');
+					var total = parseInt(elem_count.innerText);
+					if(r.isplus == 1) {
+						total ++;
+						elem_eva.className = 'eva eva_1';
 					} else {
-						evaCount --;
-						evaWrap.find('.eva').removeClass('eva_1');
+						total --;
+						elem_eva.className = 'eva';
 					}
-					evaWrap.find('.evaCount').html(evaCount);
+					elem_count.innerHTML = total;
 				} else if(r.code == 1) {
-					location.href = '../../login.php?back=' + nov.backUrl;
+					location.href = webData.WEB_ROOT + 'login.php?back=' + back_url;
 				} else {
 					alert('操作失败！');
 				}
@@ -41,19 +36,17 @@ define(function(require, exports, module) {
 	}
 	
 	//删除文件
-	File.prototype.doDelete = function() {
-		var bid = this.bid;
-		var container = this.container;
+	File.prototype.delFile = function(bid, callback) {
 		$.ajax({
 			type: 'POST',
-			url: '../../../ajax.php',
+			url: webData.WEB_ROOT + 'ajax.php',
 			dataType: 'text',
-			data: {'act':'deleteFile','bid':bid},
+			data: {'act':'delFile','bid':bid},
 			success: function(r){
-				if(r == '1') {
-					container.hide('fast');
+				if(parseInt(r) == 1) {
+					callback();
 				} else {
-					alert('操作失败！');
+					alert('操作失败');
 				}
 			}
 		});

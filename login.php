@@ -28,8 +28,7 @@ switch ($act) {
 			$r['code'] = 2;
 			$r['msg'] = 'The password is wrong.';
 		} else {
-			$_SESSION['user'] = $user;
-			$userdao->setULastDataByUid($user['uid']);
+			$userdao->doLogin($user);
 			$r['msg'] = 'Success.';
 			$r['user'] = $user;
 			$r['back'] = $back;
@@ -123,7 +122,7 @@ switch ($act) {
 	case 'verifyFindPwd':
 		$uid = trim($_POST['uid']);
 		$upwd = trim($_POST['pwd']);
-		$isSuc = $userdao->setUpwdByUid($upwd, $uid);
+		$isSuc = $userdao->setPwd($upwd, $uid);
 		echo $isSuc ? 1 : 0;
 		die();
 		break;

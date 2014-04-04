@@ -52,6 +52,8 @@ class UploadProcessor implements BaseProcessor {
 		if(isset($file['btags']) && ! empty($file['btags'])) {
 			$filedao->insertTags($bid, $file['btags']);
 		}
+		$uid = $_SESSION['user']['uid'];
+		$container['userdao']->setMoneyAndCtbt($uid, 2, 1); //上传一本新书，财富+2，贡献+1
 		return $bid;
 	}
 	
@@ -172,8 +174,6 @@ class UploadProcessor implements BaseProcessor {
 			case 'uploadNew': //单本上传
 				$bid = $this->insertFile($container, $file);
 				if($bid) {
-					$uid = $_SESSION['user']['uid'];
-					$container['userdao']->setMoneyAndCtbt($uid, 2, 1); //上传新书，财富+2，贡献+1
 					$result = $bid;
 				} else {
 					$result = false;
@@ -220,7 +220,8 @@ class UploadProcessor implements BaseProcessor {
 					$file['bstyle'] = 0;
 					$file['borig'] = '';
 					$file['btags'] = $btags;
-					if($this->insertFile($container, $file)) {
+					$bid = $this->insertFile($container, $file);
+					if($bid) {
 						$result['legal'][] = $file;
 					} else {
 						$result['illegal'][] = $file;

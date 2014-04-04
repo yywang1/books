@@ -20,10 +20,10 @@ switch ($act) {
 		$sql = "SELECT bid FROM books WHERE uid=$uid ORDER BY btime DESC";
 		break;
 	case 'download':
-		$sql = "SELECT bid FROM misc WHERE isdown=1 AND uid=$uid ORDER BY mid DESC";
+		$sql = "SELECT bid FROM misc WHERE mdown=1 AND uid=$uid ORDER BY mid DESC";
 		break;
 	case 'favorable':
-		$sql = "SELECT bid FROM misc WHERE iseva=1 AND uid=$uid ORDER BY mid DESC";
+		$sql = "SELECT bid FROM misc WHERE meva=1 AND uid=$uid ORDER BY mid DESC";
 		break;
 	default:
 		redirect($container['WEB_ROOT'] . "user/index.php");

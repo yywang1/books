@@ -1,93 +1,10 @@
 <?php
 include_once __DIR__ . '/global.init.php';
 
-function updateFileById($bid, $file) {
-	$db = $GLOBALS['db'];
-	$sql_update_books = "UPDATE books SET 
-		bname='". addslashes($file['bname']) ."',
-		bauthor='". addslashes($file['bauthor']) ."',
-		bsummary='". addslashes($file['bsummary']) ."',
-		brole='". $file['brole'] ."',
-		btype='". $file['btype'] ."',
-		bstyle='". $file['bstyle'] ."',
-		borig='". addslashes($file['borig']) ."'
-		WHERE bid=" . $bid;
-	echo $sql_update_books;
-	if(!$db->query($sql_update_books)) {
-		return false;
-	};
-	
-	if(!empty($file['btags'])) {
-		$sql_update_tags = "UPDATE tags SET ";
-		foreach($db->attr_tags as $key=>$tag) {
-			if(in_array($key, $file['btags'])) {
-				$sql_update_tags .= ($key . "=1");
-			} else {
-				$sql_update_tags .= ($key . "=0");
-			}
-			if($key != ('t' . count($db->attr_tags))) {
-				$sql_update_tags .= ",";
-			} else {
-				$sql_update_tags .= " WHERE bid=" . $bid;
-			}
-		}
-		if(!$db->query($sql_update_tags)) {
-			return false;
-		};
-	} else {
-		$sql_update_tags = "UPDATE tags SET ";
-		foreach($db->attr_tags as $key=>$tag) {
-			$sql_update_tags .= ($key . "=0");
-			if($key != ('t' . count($db->attr_tags))) {
-				$sql_update_tags .= ",";
-			} else {
-				$sql_update_tags .= " WHERE bid=" . $bid;
-			}
-		}
-		if(!$db->query($sql_update_tags)) {
-			return false;
-		};
-	}
-	return true;
-}
-
 function deleteOne($bid) {
 	$db = $GLOBALS['db'];
 	$sql_update = "UPDATE books SET bexist=0 WHERE bid=$bid";
 	return $db->query($sql_update);
-}
-
-function verifyFile($wholename) {
-	$bformat = end(explode('.', $wholename));
-	if($bformat != 'txt' && $bformat != 'pdf') {
-		return array(
-			'code' => 1,
-			'msg' => '文件类型不支持'
-		);
-	}
-	if(strripos($wholename,' by ') == false) {
-		return array(
-			'code' => 2,
-			'msg' => '命名格式错误'
-		);
-	}
-	$pos_dot = strripos($wholename, '.');
-	$pos_by = strripos($wholename,'by');
-	$bname = trim(substr($wholename, 0, $pos_by-1));
-	$bauthor = trim(substr($wholename, $pos_by+3, $pos_dot-$pos_by-3));
-	if(isFileExist($bname, $bauthor)) {
-		return array(
-			'code' => 3,
-			'msg' => '文件已存在'
-		);
-	}
-	return array(
-		'code' => 0,
-		'msg' => '可以上传',
-		'bname' => $bname,
-		'bauthor' => $bauthor,
-		'bformat' => $bformat
-	);
 }
 
 function getTmpBooks($str) {
@@ -138,18 +55,6 @@ function insertTmpFile($bid, $tablename) {
 			$db->query($insert_temp_sql);
 			return true;
 		}
-	}
-}
-
-function doFileEva($bid, $addEva) {
-	$db = $GLOBALS['db'];
-	$file = getFileById($bid);
-	if(! empty($file)) {
-		$beva = $file['beva'] + $addEva;
-		$sql = "UPDATE books SET 
-			beva='$beva'	
-			WHERE bid=" . $bid;
-		$db->query($sql);
 	}
 }
 

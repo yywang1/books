@@ -16,7 +16,7 @@ switch ($act) {
 			$r['msg'] = 'The Old Password is wrong.';
 		} else {
 			$upwd = trim($_POST['pwd']);
-			if($container['userdao']->setUpwdByUid($upwd, $_SESSION['user']['uid'])) {
+			if($container['userdao']->setPwd($upwd, $_SESSION['user']['uid'])) {
 				$_SESSION['user']['upwd'] = $upwd;
 				$r['code'] = 0;
 				$r['msg'] = 'Success.';

@@ -17,8 +17,9 @@ $fileName = basename($filePath);
 if(file_exists(toGb($filePath))) {
 	
 	$uid = $_SESSION['user']['uid'];
-	$container['userdao']->setMoneyAndCtbt($uid, -1, 1); //上传新书，财富+2，贡献+1
-	$container['miscdao']->setRecord('down', $bid, $uid);
+	$container['userdao']->setMoneyAndCtbt($uid, -1, 0); //下载，财富-1，贡献+0
+	$container['filedao']->setExtra('down', $bid, 1); //总下载次数+1
+	$container['miscdao']->setRecord('down', $bid, $uid); //记录
 
 	header("Content-type: text/plain");
 	

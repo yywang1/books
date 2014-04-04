@@ -20,12 +20,6 @@ define(function(require, exports, modulselectWidgete) {
 		require('./browse');
 	}
 	
-	// details
-	// --------------------------------------------------
-	if(data_key == 'details') {
-		require('./details');
-	}
-	
 	// upload
 	// --------------------------------------------------
 	if(data_key == 'upload') {

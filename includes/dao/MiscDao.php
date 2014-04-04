@@ -11,18 +11,31 @@ class MiscDao extends BaseDao{
 			$sql = "INSERT INTO misc(bid, uid) VALUES($bid, $uid);";
 			$db->query($sql);
 			$mid = mysql_insert_id();
-			$row['iseva'] = 0;
+			$row['meva'] = 0;
+			$row['mdown'] = 0;
 		} else {
 			$mid = $row['mid'];
 		}
 		
 		if($key == 'down') {
-			$sql = "UPDATE `misc` SET isdown=1, downtime='" . date('Y-m-d H:i:s') . "' WHERE mid=$mid";
-			$db->query($sql);
+			$sql = "UPDATE `misc` SET mdown=1, mdowntime='" . date('Y-m-d H:i:s') . "' WHERE mid=$mid";
+			$result = 1;
 		} else if($key == 'eva') {
-			$sql = "UPDATE `misc` SET iseva=" . ($row['iseva'] ? 0 : 1) . ", evatime='" . date('Y-m-d H:i:s') . "' WHERE mid=$mid";
-			$db->query($sql);
+			if($row['meva']) {
+				if($row['mdown']) {
+					$sql = "UPDATE `misc` SET meva=0, mevatime='" . date('Y-m-d H:i:s') . "' WHERE mid=$mid";
+					$result = 0;
+				} else {
+					$sql = "DELETE FROM `misc` WHERE mid=$mid";
+					$result = 0;
+				}
+			} else {
+				$sql = "UPDATE `misc` SET meva=1, mevatime='" . date('Y-m-d H:i:s') . "' WHERE mid=$mid";
+				$result = 1;
+			}
 		}
+		$db->query($sql);
+		return $result; //操作结果是加1还是减1
 	}
 
 }

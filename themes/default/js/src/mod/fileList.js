@@ -2,21 +2,21 @@ define(function(require, exports, module) {
 
 	var $ = require('jquery');
 	var File = require('./file');
+	var file = new File();
 	
 	//喜欢
 	$('.eva').click(function() {
-		var liId = $(this).parents('li').attr('id');
-		var bid = parseInt(liId.replace('nov_', ''));
-		var f = new File(bid);
-		f.doLike();
+		var bid = parseInt($(this).attr('id').replace('eva_', ''));
+		file.setEva(bid);
 	});
 	
 	//删除文件
 	$('.btnDelFile').click(function() {
-		var liId = $(this).parents('li').attr('id');
-		var bid = parseInt(liId.replace('nov_', ''));
-		var f = new File(bid);
-		f.doDelete();
+		var me = $(this);
+		var bid = parseInt($(this).attr('id').replace('del_', ''));
+		var isok = file.delFile(bid, function() {
+			me.closest('li').hide('fast');
+		});
 	});
 	
 });

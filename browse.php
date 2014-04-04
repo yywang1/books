@@ -1,11 +1,6 @@
 <?
 include_once __DIR__ . '/includes/global.init.php';
 
-//{{{ common html code
-include_once __DIR__ . '/c_page.php';
-$tplArray = array('common_html' => $common_html);
-//}}}
-
 //{{{ 类型、文风筛选
 $tplArray['html_filterForm'] = $container['twig']->render('mod/browse/filterForm.html', array(
 		'WEB_ROOT' => $container['WEB_ROOT'],

@@ -155,7 +155,7 @@ function getPageString($page, $url, $filesTotal, $pageSize) {
 }
 
 function isLogin() {
-	if(isset($_SESSION['user']) && $_SESSION['user']['uid'] > 0) {
+	if(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user']['uid'] > 0) {
 		return true;
 	} else {
 		return false;

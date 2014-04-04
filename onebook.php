@@ -6,6 +6,8 @@ if($bid == 0) {
 	redirect("index.php");
 }
 
+$container['filedao']->setExtra('browse', $bid, 1); //总下载次数+1
+
 //{{{ details
 include_once __DIR__ . '/includes/processor/OnebookProcessor.php';
 $onebook = new OnebookProcessor();
