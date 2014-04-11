@@ -20,7 +20,8 @@ class Initializer{
 		$container['path'] = function($c){
 			$paths = array();
 			$paths['tpl'] = $c['ROOT_PATH'] . 'themes/' . $c['siteConf']['theme'] . '/app/';
-			$paths['cache'] = $c['ROOT_PATH'] . 'templates/';
+			$paths['caches'] = $c['ROOT_PATH'] . 'caches/';
+			$paths['searches'] = $c['ROOT_PATH'] . 'caches/searches/';
 			$paths['files'] = $c['ROOT_PATH'] . 'files/';
 			$paths['root'] = $c['WEB_ROOT'];
 			$public_path = $c['WEB_ROOT'] . 'themes/' . $c['siteConf']['theme'];
@@ -75,6 +76,10 @@ class Initializer{
 		$container['miscdao'] = function($c){
 			include $c['ROOT_PATH'].'includes/dao/MiscDao.php';
             return new MiscDao($c);
+        };
+		$container['searchdao'] = function($c){
+			include $c['ROOT_PATH'].'includes/dao/SearchDao.php';
+            return new SearchDao($c);
         };
         return $container;
     }

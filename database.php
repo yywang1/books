@@ -114,7 +114,8 @@ function createTables($container) {
 		sid int NOT NULL AUTO_INCREMENT,
 		PRIMARY KEY(sid),
 		skey varchar(50),
-		stime timestamp
+		scount int,
+		slasttime timestamp
 		)";
 	if(! $db->query($create_searches)){
 		return 'searches (create)';

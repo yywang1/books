@@ -7,12 +7,8 @@
 *.config 
 
 # 忽略所有缓存文件
-templates/caches/*
-!templates/caches/.gitkeep
-templates/compiled/*
-!templates/compiled/.gitkeep
-templates/loc.books.com/*
-!templates/loc.books.com/.gitkeep
+caches/searches/*
+!caches/searches/.gitkeep
 
 # 忽略所有上传文件
 files/*

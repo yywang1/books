@@ -68,7 +68,8 @@ class Db {
 	
 	function isTableExist($tablename) {
 		$sql = "SHOW TABLES FROM " . $this->db_name;
-		if($res = $this->query($sql)) {
+		$res = $this->query($sql);
+		if($res) {
 			while($row = mysql_fetch_row($res)) {
 				if($tablename == $row[0]) {
 					return true;

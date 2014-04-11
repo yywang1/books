@@ -11,18 +11,12 @@ $tplArray['modClass'] = 'sbHot';
 //}}}
 
 //{{{ fileList
-$act = isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '';
-if($act == 'hsearch') {
-	include_once __DIR__ . '/includes/processor/SearchProcessor.php';
-	$fileList = new SearchProcessor();
-} else {
-	include_once __DIR__ . '/includes/processor/FileListProcessor.php';
-	$fileList = new FileListProcessor();
-}
+include_once __DIR__ . '/includes/processor/FileListProcessor.php';
+$fileList = new FileListProcessor();
 $fileList->process(array(
 		'container' => $container,
 		'dataKey' => 'browse',
-		'act' => $act,
+		'act' => isset($_REQUEST['act']) && $_REQUEST['act'] ? $_REQUEST['act'] : '',
 		'page' => isset($_REQUEST['page']) && $_REQUEST['page'] ? $_REQUEST['page'] : '1',
 		'sortBy' => isset($_REQUEST['sortby']) && $_REQUEST['sortby'] ? $_REQUEST['sortby'] : '1',
 		'pageSize' => 20,
