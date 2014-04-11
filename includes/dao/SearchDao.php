@@ -2,7 +2,7 @@
 include_once __DIR__ . '/BaseDao.php';
 
 class SearchDao extends BaseDao{
-	
+
 	public function getRecordBySkey($skey) {
 		$db = $this->db();
 		$sql = "SELECT * FROM searches WHERE skey='$skey' LIMIT 1";
@@ -30,7 +30,7 @@ class SearchDao extends BaseDao{
 	
 	public function getCacheFile($sid) {
 		$container = $this->container;
-		$file_path = $container['path']['searches'] . 'sid_' . $sid . '.json';
+		$file_path = $container['path']['caches'] . 'searches/sid_' . $sid . '.json';
 		if(file_exists($file_path)) {
 			return $file_path;
 		} else {
@@ -41,7 +41,7 @@ class SearchDao extends BaseDao{
 	public function createCacheFile($sid, $bids) {
 		$db = $this->db();
 		$container = $this->container;
-		$file_path = $container['path']['searches'] . 'sid_' . $sid . '.json';
+		$file_path = $container['path']['caches'] . 'searches/sid_' . $sid . '.json';
 		
 		//$filedao = $container['filedao'];
 		$file_cont = array();

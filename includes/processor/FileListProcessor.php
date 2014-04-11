@@ -78,6 +78,7 @@ class FileListProcessor implements BaseProcessor {
 			$attr_type = $container['vars']['attr_type'];
 			$attr_style = $container['vars']['attr_style'];
 			
+			$bids = array();
 			$hkeys = explode(' ', $hkeystr);
 			foreach($hkeys as $hkey) {
 				if(in_array($hkey, $attr_tags)) {
@@ -89,14 +90,15 @@ class FileListProcessor implements BaseProcessor {
 				} else {
 					$sql = '';
 				}
-				$bids = ($sql != '') ? $filedao->getBids($sql) : array();
+				$bids_key = ($sql != '') ? $filedao->getBids($sql) : array();
+				$bids = array_merge($bids, $bids_key);
+				
 				$sql_like = "SELECT bid FROM books WHERE (bname LIKE '%" . $hkey . "%') OR (bauthor LIKE '%" . $hkey . "%') OR (brole LIKE '%" . $hkey . "%')";
 				$bids_like = $filedao->getBids($sql_like);
 				$bids = array_merge($bids, $bids_like);
-				$cache_file = $searchdao->createCacheFile($sid, $bids);
 			}
+			$cache_file = $searchdao->createCacheFile($sid, $bids);
 		}
-		
 		$tmpbooks = $searchdao->createTmpBooks($sid, $cache_file);
 		
 		$sqls = array();

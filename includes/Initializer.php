@@ -21,7 +21,6 @@ class Initializer{
 			$paths = array();
 			$paths['tpl'] = $c['ROOT_PATH'] . 'themes/' . $c['siteConf']['theme'] . '/app/';
 			$paths['caches'] = $c['ROOT_PATH'] . 'caches/';
-			$paths['searches'] = $c['ROOT_PATH'] . 'caches/searches/';
 			$paths['files'] = $c['ROOT_PATH'] . 'files/';
 			$paths['root'] = $c['WEB_ROOT'];
 			$public_path = $c['WEB_ROOT'] . 'themes/' . $c['siteConf']['theme'];
