@@ -519,6 +519,7 @@ body {
   margin-top: 20px;
 }
 .quickNav a {
+  float: left;
   display: inline-block;
   width: 155px;
   height: 50px;
