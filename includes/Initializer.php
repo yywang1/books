@@ -3,6 +3,9 @@ class Initializer{
 	public function initConf($container){
 		$container['siteConf'] = function($c){
 			include $c['ROOT_PATH'].'includes/config.env.php';
+			
+			$difftime = strtotime(date('Y-m-d H:i:s')) - strtotime('2014-04-01 00:00:00');
+			
 			$siteConf = array(
 				'db_host' => $db_host,
 				'db_name' => $db_name,
@@ -10,6 +13,7 @@ class Initializer{
 				'db_pass' => $db_pass,
 				'theme' => $theme,
 				'DEBUG_MODE' => $DEBUG_MODE,
+				'last_v' => substr($difftime,-6),
 			);
             return $siteConf;
         };

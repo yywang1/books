@@ -233,6 +233,30 @@
 .btn5:hover {
   background-position: -68px -64px;
 }
+.btn6 {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  vertical-align: middle;
+  background: url(../images/btn.gif) no-repeat;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  width: 66px;
+  height: 30px;
+  line-height: 30px;
+  background-position: 0 -280px;
+  padding-bottom: 2px;
+  color: #fff;
+  font-size: 14px;
+}
+.btn6:hover {
+  text-decoration: none;
+}
+.btn6:hover {
+  background-position: -68px -280px;
+}
 /*CSS Reset*/
 body,
 h1,
@@ -392,6 +416,18 @@ img {
 }
 .mt4 {
   margin-top: 20px;
+}
+.mb1 {
+  margin-bottom: 5px;
+}
+.mb2 {
+  margin-bottom: 10px;
+}
+.mb3 {
+  margin-bottom: 15px;
+}
+.mb4 {
+  margin-bottom: 20px;
 }
 .ml1 {
   margin-left: 5px;
@@ -718,6 +754,10 @@ body {
 .padMain h1 {
   padding: 25px 0;
 }
+.padMain h1 .total {
+  color: #999;
+  margin-left: 15px;
+}
 .filter {
   width: 100%;
   height: 49px;
@@ -963,6 +1003,42 @@ body {
   border-top: none;
   padding-top: 0;
   margin-top: 0;
+}
+.fileBox {
+  border: solid 1px #dddddd;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.fileBox dt {
+  background: #f5f5f5;
+  padding: 10px 10px;
+  height: 30px;
+  line-height: 30px;
+  white-space: nowrap;
+  position: relative;
+  border-bottom: dotted 1px #dddddd;
+}
+.fileBox dt.last {
+  border-bottom: none;
+}
+.fileBox h3 span {
+  font-weight: normal;
+  font-size: 12px;
+}
+.fileBox .o {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.fileBox .c {
+  border-top: dotted 1px #dddddd;
+  padding: 10px 0;
+  overflow: hidden;
+}
+.fileBox .c li {
+  width: 45%;
+  padding: 5px 10px;
+  float: left;
 }
 .optionList li {
   display: inline-block;

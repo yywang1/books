@@ -22,7 +22,7 @@ function createTables($container) {
 		borig varchar(200) comment '原创网址',
 		uid varchar(20) comment '上传者的uid',
 		btime timestamp comment '文件上传的时间'
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_books)){
 		return 'books (create)';
 	}
@@ -48,7 +48,7 @@ function createTables($container) {
 			if($key != ('t' . count($attr_tags))) {
 				$create_tags .= $key . ' boolean,';
 			} else {
-				$create_tags .= $key . ' boolean)';
+				$create_tags .= $key . ' boolean) DEFAULT CHARSET=utf8';
 			}
 		}
 		if(! $db->query($create_tags)){
@@ -63,7 +63,7 @@ function createTables($container) {
 		beva int comment '好评数',
 		bdown int comment '下载数',
 		bbrowse int comment '浏览数'
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_books_extra)){
 		return 'books_extra (create)';
 	}
@@ -77,7 +77,7 @@ function createTables($container) {
 		upwd varchar(16),
 		uexist boolean,
 		uregtime timestamp
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_users)){
 		return 'users (create)';
 	}
@@ -89,7 +89,7 @@ function createTables($container) {
 		umoney int comment '财富',
 		uctbt int comment '贡献',
 		ulasttime timestamp comment '上次登录时间'
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_users_extra)){
 		return 'users_extra (create)';
 	}
@@ -104,7 +104,7 @@ function createTables($container) {
 		mdowntime timestamp,
 		meva boolean,
 		mevatime timestamp
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_misc)){
 		return 'misc (create)';
 	}
@@ -116,7 +116,7 @@ function createTables($container) {
 		skey varchar(50),
 		scount int,
 		slasttime timestamp
-		)";
+		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_searches)){
 		return 'searches (create)';
 	}

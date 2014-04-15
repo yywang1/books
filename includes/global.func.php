@@ -206,6 +206,7 @@ function getTplArray($container) {
 			'IMG_PATH' => $container['path']['img'],
 			'DEBUG_MODE' => $container['siteConf']['DEBUG_MODE'],
 			'REQUEST_URI' => urlencode($_SERVER['REQUEST_URI']),
+			'last_v' => $container['siteConf']['last_v'],
 		);
 
 	if(isLogin()) {

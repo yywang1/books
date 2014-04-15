@@ -14,7 +14,8 @@ seajs.config({
 		'jquery' : 'crossjs/jquery/1.11.0/jquery.js',
 		'main' : 'custom/main/0.0.1/main'
 	},
-	preload: ['jquery']
+	preload: ['jquery'],
+	map: [[/^(.*\.(?:css|js))(.*)$/i, "$1?{{last_v}}"]]
 });
 
 {% if DEBUG_MODE %}

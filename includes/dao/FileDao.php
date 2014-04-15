@@ -2,7 +2,6 @@
 include_once __DIR__ . '/BaseDao.php';
 
 class FileDao extends BaseDao{
-	
 	public function getBooksByBid($bid) {
 		$db = $this->db();
 		$sql = "SELECT * FROM books b
@@ -41,7 +40,7 @@ class FileDao extends BaseDao{
 		$file = $this->getBooksByBid($bid);
 		$file['btags'] = $this->getTagsByBid($bid);
 		$file['misc'] = isLogin() ? $this->getMiscByBidUid($bid, $_SESSION['user']['uid']) : array();
-		$file['bsize'] = transSize($file['bsize']);		
+		$file['bsize'] = transSize($file['bsize']);
 		$file['bpath'] = 'files/' . $file['bauthor'] . '/' . $file['bname'] . ' by ' . $file['bauthor'] . '.' . $file['bformat'];
 		$file['bsummary'] = dataToHtml($file['bsummary']);
 		$vars = $this->container['vars'];
@@ -84,7 +83,7 @@ class FileDao extends BaseDao{
 			'" . $file['bsize'] . "',
 			'" . $file['btype'] . "',
 			'" . $file['bstyle'] . "',
-			'1',
+			'2',
 			'" . $file['bformat'] . "',
 			'" . $file['borig'] . "',
 			'" . $_SESSION['user']['uid'] . "',
@@ -120,10 +119,44 @@ class FileDao extends BaseDao{
 		
 	}
 	
-	public function delTagsByBid($bid, $btags) {
+	public function delBooksByBid($bid) {
+		$db = $this->db();
+		$sql = "DELETE FROM books WHERE bid=$bid";
+		return $db->query($sql);
+	}
+	
+	public function delTagsByBid($bid) {
 		$db = $this->db();
 		$sql = "DELETE FROM tags WHERE bid=$bid";
 		return $db->query($sql);
+	}
+	
+	public function delBooksExtraByBid($bid) {
+		$db = $this->db();
+		$sql = "DELETE FROM books_extra WHERE bid=$bid";
+		return $db->query($sql);
+	}
+	
+	public function delFileOnDisk($bid) {
+		$file = $this->getBooksByBid($bid);
+		if(! empty($file)) {
+			$container = $this->container;
+			$disk_path = $container['ROOT_PATH'] . 'files/' . $file['bauthor'] . '/' . $file['bname'] . ' by ' . $file['bauthor'] . '.' . $file['bformat'];
+			$disk_path = toGb($disk_path);
+			if(file_exists($disk_path)) {
+				unlink($disk_path);
+				return true;
+			}
+		}
+		return false;
+	}
+	public function delFileByBid($bid) {
+		//删除txt文件
+		$del_disk = $this->delFileOnDisk($bid);
+		$del_books = $this->delBooksByBid($bid);
+		$del_extra = $this->delBooksExtraByBid($bid);
+		$del_tags = $this->delTagsByBid($bid);
+		return ($del_disk && $del_books && $del_extra && $del_tags) ? true : false;
 	}
 	
 	public function setBooksByBid($bid, $file) {

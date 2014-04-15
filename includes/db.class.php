@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class Db {
 	var $link_id = NULL;
 	var $db_name = '';
@@ -14,6 +14,9 @@ class Db {
 		if(!($this->link_id = mysql_connect($siteConf['db_host'], $siteConf['db_user'], $siteConf['db_pass']))) {
 			die('Could not connect: ' . mysql_error());
 		}		
+		mysql_query("set names 'utf8'");   
+		mysql_query("set character_set_client=utf8");   
+		mysql_query("set character_set_results=utf8");   
 		mysql_select_db($siteConf['db_name'], $this->link_id);
 		$this->db_name = $siteConf['db_name'];
 	}

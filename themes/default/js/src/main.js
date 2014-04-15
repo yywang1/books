@@ -55,5 +55,11 @@ define(function(require, exports, modulselectWidgete) {
 	if(data_key == 'changePwd') {
 		require('./changePwd');
 	}
+	
+	// pending
+	// --------------------------------------------------
+	if(data_key == 'pending') {
+		require('./pending');
+	}
 
 });

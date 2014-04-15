@@ -10,6 +10,9 @@
 caches/searches/*
 !caches/searches/.gitkeep
 
+caches/books/*
+!caches/books/.gitkeep
+
 # 忽略所有上传文件
 files/*
 !files/.gitkeep
