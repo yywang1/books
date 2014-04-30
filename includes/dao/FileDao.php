@@ -2,13 +2,20 @@
 include_once __DIR__ . '/BaseDao.php';
 
 class FileDao extends BaseDao{
+	
+	public function handleFile($file) {
+		$file['bsize'] = transSize($file['bsize']);
+		$file['bpath'] = 'files/' . $file['bauthor'] . '/' . $file['bname'] . ' by ' . $file['bauthor'] . '.' . $file['bformat'];
+		$file['bsummary'] = dataToHtml($file['bsummary']);
+		$vars = $this->container['vars'];
+		$file['btype_lang'] = $vars['attr_type'][$file['btype']];
+		$file['bstyle_lang'] = $vars['attr_style'][$file['bstyle']];
+		return $file;
+	}
+	
 	public function getBooksByBid($bid) {
 		$db = $this->db();
-		$sql = "SELECT * FROM books b
-				LEFT JOIN books_extra be
-				ON b.bid=be.bid
-				WHERE b.bid=$bid
-				LIMIT 1";
+		$sql = "SELECT * FROM books WHERE bid=$bid LIMIT 1";
 		$file = $db->fetchAssoc($sql);
 		return $file;
 	}
@@ -31,21 +38,28 @@ class FileDao extends BaseDao{
 	
 	public function getMiscByBidUid($bid, $uid) {
 		$db = $this->db();
-		$sql = "SELECT `mdown`, `meva` FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1";
+		$sql = "SELECT `mdown`, `meva`, `mbrowse` FROM `misc` WHERE bid=$bid AND uid=$uid LIMIT 1";
 		$misc = $db->fetchAssoc($sql);
 		return $misc;
+	}
+	
+	public function getFilesBySql($sql) {
+		$db = $this->db();
+		$fileList = $db->fetchAssocArray($sql);
+		foreach($fileList as $key => $file) {
+			$bid = $file['bid'];
+			$file['btags'] = $this->getTagsByBid($bid);
+			$file['misc'] = isLogin() ? $this->getMiscByBidUid($bid, $_SESSION['user']['uid']) : array();
+			$fileList[$key] = $this->handleFile($file);
+		}
+		return $fileList;
 	}
 	
 	public function getFileByBid($bid) {
 		$file = $this->getBooksByBid($bid);
 		$file['btags'] = $this->getTagsByBid($bid);
 		$file['misc'] = isLogin() ? $this->getMiscByBidUid($bid, $_SESSION['user']['uid']) : array();
-		$file['bsize'] = transSize($file['bsize']);
-		$file['bpath'] = 'files/' . $file['bauthor'] . '/' . $file['bname'] . ' by ' . $file['bauthor'] . '.' . $file['bformat'];
-		$file['bsummary'] = dataToHtml($file['bsummary']);
-		$vars = $this->container['vars'];
-		$file['btype_lang'] = $vars['attr_type'][$file['btype']];
-		$file['bstyle_lang'] = $vars['attr_style'][$file['bstyle']];
+		$file = $this->handleFile($file);
 		return $file;
 	}
 	
@@ -75,7 +89,7 @@ class FileDao extends BaseDao{
 	
 	public function insertBooks($file) {
 		$db = $this->db();
-		$sql = "INSERT INTO books(bname, bauthor, bsummary, brole, bsize, btype, bstyle, bexist, bformat, borig, uid, btime) VALUES(
+		$sql = "INSERT INTO books(bname, bauthor, bsummary, brole, bsize, btype, bstyle, bexist, bformat, borig, uid, btime, beva, bdown, bbrowse) VALUES(
 			'" . addslashes($file['bname']) . "',
 			'" . addslashes($file['bauthor']) . "',
 			'" . addslashes($file['bsummary']) . "',
@@ -87,11 +101,12 @@ class FileDao extends BaseDao{
 			'" . $file['bformat'] . "',
 			'" . $file['borig'] . "',
 			'" . $_SESSION['user']['uid'] . "',
-			'" . date('Y-m-d H:i:s') . "')";
+			'" . date('Y-m-d H:i:s') . "',
+			0,
+			0,
+			0)";
 		if($db->query($sql)) {
 			$bid = mysql_insert_id();
-			$sql = "INSERT INTO books_extra(bid, beva, bdown, bbrowse) VALUES($bid, 0, 0, 0)";
-			$db->query($sql);
 			return $bid;
 		}
 		return false;
@@ -119,24 +134,6 @@ class FileDao extends BaseDao{
 		
 	}
 	
-	public function delBooksByBid($bid) {
-		$db = $this->db();
-		$sql = "DELETE FROM books WHERE bid=$bid";
-		return $db->query($sql);
-	}
-	
-	public function delTagsByBid($bid) {
-		$db = $this->db();
-		$sql = "DELETE FROM tags WHERE bid=$bid";
-		return $db->query($sql);
-	}
-	
-	public function delBooksExtraByBid($bid) {
-		$db = $this->db();
-		$sql = "DELETE FROM books_extra WHERE bid=$bid";
-		return $db->query($sql);
-	}
-	
 	public function delFileOnDisk($bid) {
 		$file = $this->getBooksByBid($bid);
 		if(! empty($file)) {
@@ -150,11 +147,23 @@ class FileDao extends BaseDao{
 		}
 		return false;
 	}
+	
+	public function delBooksByBid($bid) {
+		$db = $this->db();
+		$sql = "DELETE FROM books WHERE bid=$bid";
+		return $db->query($sql);
+	}
+	
+	public function delTagsByBid($bid) {
+		$db = $this->db();
+		$sql = "DELETE FROM tags WHERE bid=$bid";
+		return $db->query($sql);
+	}
+	
 	public function delFileByBid($bid) {
 		//删除txt文件
 		$del_disk = $this->delFileOnDisk($bid);
 		$del_books = $this->delBooksByBid($bid);
-		$del_extra = $this->delBooksExtraByBid($bid);
 		$del_tags = $this->delTagsByBid($bid);
 		return ($del_disk && $del_books && $del_extra && $del_tags) ? true : false;
 	}
@@ -219,13 +228,13 @@ class FileDao extends BaseDao{
 		$db = $this->db();
 		$field = 'b' . $option;
 		if($field == 'beva' && $value !== 1) {
-			$sql_get = "SELECT $field FROM `books_extra` WHERE bid=$bid;";
+			$sql_get = "SELECT $field FROM `books` WHERE bid=$bid;";
 			$row = $db->fetchAssoc($sql_get);
 			if($row[$field] > 0) {
-				$sql = "UPDATE books_extra SET $field=$field-1 WHERE bid=$bid";
+				$sql = "UPDATE books SET $field=$field-1 WHERE bid=$bid";
 			}
 		} else {
-			$sql = "UPDATE books_extra SET $field=$field+1 WHERE bid=$bid";
+			$sql = "UPDATE books SET $field=$field+1 WHERE bid=$bid";
 		}
 		if(isset($sql)) {
 			$db->query($sql);

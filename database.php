@@ -21,7 +21,10 @@ function createTables($container) {
 		bformat varchar(10) comment '文件格式',
 		borig varchar(200) comment '原创网址',
 		uid varchar(20) comment '上传者的uid',
-		btime timestamp comment '文件上传的时间'
+		btime timestamp comment '文件上传的时间',
+		beva int comment '好评数',
+		bdown int comment '下载数',
+		bbrowse int comment '浏览数'
 		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_books)){
 		return 'books (create)';
@@ -56,18 +59,6 @@ function createTables($container) {
 		}
 	}
 	
-	//书籍操作总数统计 books_extra
-	$create_books_extra = "CREATE TABLE IF NOT EXISTS books_extra(
-		bid int NOT NULL,
-		PRIMARY KEY(bid),
-		beva int comment '好评数',
-		bdown int comment '下载数',
-		bbrowse int comment '浏览数'
-		) DEFAULT CHARSET=utf8";
-	if(! $db->query($create_books_extra)){
-		return 'books_extra (create)';
-	}
-	
 	//用户表 users （uctbt:贡献、参与度）
 	$create_users = "CREATE TABLE IF NOT EXISTS users(
 		uid int NOT NULL AUTO_INCREMENT,
@@ -76,22 +67,13 @@ function createTables($container) {
 		uemail varchar(100),
 		upwd varchar(16),
 		uexist boolean,
-		uregtime timestamp
-		) DEFAULT CHARSET=utf8";
-	if(! $db->query($create_users)){
-		return 'users (create)';
-	}
-	
-	//用户经常变动的数据 users_extra
-	$create_users_extra = "CREATE TABLE IF NOT EXISTS users_extra(
-		uid int NOT NULL,
-		PRIMARY KEY(uid),
+		uregtime timestamp,
 		umoney int comment '财富',
 		uctbt int comment '贡献',
 		ulasttime timestamp comment '上次登录时间'
 		) DEFAULT CHARSET=utf8";
-	if(! $db->query($create_users_extra)){
-		return 'users_extra (create)';
+	if(! $db->query($create_users)){
+		return 'users (create)';
 	}
 	
 	//用户与书籍的关联 misc
@@ -103,7 +85,9 @@ function createTables($container) {
 		mdown boolean,
 		mdowntime timestamp,
 		meva boolean,
-		mevatime timestamp
+		mevatime timestamp,
+		mbrowse boolean,
+		mbrowsetime timestamp
 		) DEFAULT CHARSET=utf8";
 	if(! $db->query($create_misc)){
 		return 'misc (create)';

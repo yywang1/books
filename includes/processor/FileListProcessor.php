@@ -3,13 +3,13 @@ include_once __DIR__ . '/BaseProcessor.php';
 
 class FileListProcessor implements BaseProcessor {
 	
-	public function build_orderby($sortBy, $isJoin) {
+	public function build_orderby($sortBy) {
 		if($sortBy == 1) {
-			$orderby = " ORDER BY " . ($isJoin ? 'b.' : '') . "btime DESC";
+			$orderby = " ORDER BY btime DESC";
 		} elseif($sortBy == 2) {
-			$orderby = " ORDER BY " . ($isJoin ? 'b.' : '') . "bsize DESC";
+			$orderby = " ORDER BY bsize DESC";
 		} elseif($sortBy == 3) {
-			$orderby = " ORDER BY " . ($isJoin ? 'be.' : '') . "beva DESC";
+			$orderby = " ORDER BY beva DESC";
 		} else {
 			$orderby = "";
 		}
@@ -17,7 +17,7 @@ class FileListProcessor implements BaseProcessor {
 	}
 
 	public function build_sql_sbfilter($sortBy) {
-		$orderby = $this->build_orderby($sortBy, true);
+		$orderby = $this->build_orderby($sortBy);
 		
 		$ftype = isset($_GET['ftype']) ? $_GET['ftype'] : 0;
 		$fstyle = isset($_GET['fstyle']) ? $_GET['fstyle'] : 0;
@@ -26,25 +26,23 @@ class FileListProcessor implements BaseProcessor {
 			if(strpos($condition, "=")) {
 				$condition .= " AND ";
 			}
-			$condition .= "b.btype=" . $ftype;
+			$condition .= "btype=" . $ftype;
 		}
 		if($fstyle > 0) {
 			if(strpos($condition, "=")) {
 				$condition .= " AND ";
 			}
-			$condition .= "b.bstyle=" . $fstyle;
+			$condition .= "bstyle=" . $fstyle;
 		}
 		
 		$sqls = array();
 		$sqls['getTotal'] = "SELECT count(*) FROM books b " . $condition;
-		$sqls['getIds'] = "SELECT b.bid FROM books b
-					LEFT JOIN books_extra be
-					ON b.bid=be.bid " . $condition . $orderby;
+		$sqls['getFiles'] = "SELECT * FROM books " . $condition . $orderby;
 		return $sqls;
 	}
 	
 	public function build_sql_sbsearch($sortBy) {
-		$orderby = $this->build_orderby($sortBy, true);
+		$orderby = $this->build_orderby($sortBy);
 		$sbfield = $_GET['sbfield'];
 		$sbkey = $_GET['sbkey'];
 		if($sbfield == 0) {
@@ -57,14 +55,12 @@ class FileListProcessor implements BaseProcessor {
 		
 		$sqls = array();
 		$sqls['getTotal'] = "SELECT count(*) FROM books WHERE $field LIKE '%" . $sbkey . "%'";
-		$sqls['getIds'] = "SELECT b.bid FROM books b
-					LEFT JOIN books_extra be
-					ON b.bid=be.bid WHERE b.$field LIKE '%" . $sbkey . "%'" . $orderby;
+		$sqls['getFiles'] = "SELECT * FROM books WHERE $field LIKE '%" . $sbkey . "%'" . $orderby;
 		return $sqls;
 	}
 	
 	public function build_sql_hsearch($sortBy, $container) {
-		$orderby = $this->build_orderby($sortBy, false);
+		$orderby = $this->build_orderby($sortBy);
 		
 		$filedao = $container['filedao'];
 		$searchdao = $container['searchdao'];
@@ -103,17 +99,15 @@ class FileListProcessor implements BaseProcessor {
 		
 		$sqls = array();
 		$sqls['getTotal'] = "SELECT count(*) FROM $tmpbooks";
-		$sqls['getIds'] = "SELECT bid FROM $tmpbooks" . $orderby;
+		$sqls['getBids'] = "SELECT bid FROM $tmpbooks" . $orderby;
 		return $sqls;
 	}
 
 	public function build_sql_default($sortBy) {
-		$orderby = $this->build_orderby($sortBy, true);
+		$orderby = $this->build_orderby($sortBy);
 		$sqls = array();
 		$sqls['getTotal'] = "SELECT count(*) FROM books WHERE bexist=1";
-		$sqls['getIds'] = "SELECT b.bid FROM books b
-					LEFT JOIN books_extra be
-					ON b.bid=be.bid WHERE bexist=1" . $orderby;
+		$sqls['getFiles'] = "SELECT * FROM books WHERE bexist=1" . $orderby;
 		return $sqls;
 	}
 	
@@ -131,8 +125,8 @@ class FileListProcessor implements BaseProcessor {
 		$filedao = $container['filedao'];
 		
 		if($dataKey == 'index') {
-			$sqlGetIds = "SELECT bid,bname FROM books WHERE bexist = 1 ORDER BY btime DESC LIMIT 20";
-			$bids = $filedao->getBids($sqlGetIds);
+			$sql = "SELECT * FROM books WHERE bexist = 1 ORDER BY btime DESC LIMIT 20";
+			$this->fileList = $filedao->getFilesBySql($sql);
 		}
 		if($dataKey == 'browse') {
 			switch ($act) {
@@ -159,8 +153,15 @@ class FileListProcessor implements BaseProcessor {
 				$limitoffset = "";
 			}
 			
-			$sqlGetIds = $sqls['getIds'] . $limitoffset;
-			$bids = $filedao->getBids($sqlGetIds);
+			
+			if(! empty($sqls['getBids'])) {
+				$sqlGetBids = $sqls['getBids'] . $limitoffset;
+				$bids = $filedao->getBids($sqlGetBids);
+				$this->fileList = $filedao->getFilesByBids($bids);
+			} else {
+				$sqlGetFiles = $sqls['getFiles'] . $limitoffset;
+				$this->fileList = $filedao->getFilesBySql($getFilesByBids);
+			}
 			
 			$url = $_SERVER['REQUEST_URI'];
 			$pageTotal = ($filesTotal == 0) ? 0 : ceil($filesTotal / $pageSize);
@@ -171,9 +172,9 @@ class FileListProcessor implements BaseProcessor {
 					'filesTotal' => $filesTotal,
 					'pageTotal' => $pageTotal,
 				));
+			
 		}
 		
-		$this->fileList = $filedao->getFilesByBids($bids);
 	}
 	
     public function render($params = array()) {

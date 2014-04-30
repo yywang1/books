@@ -46,11 +46,7 @@ class SearchDao extends BaseDao{
 		//$filedao = $container['filedao'];
 		$file_cont = array();
 		foreach($bids as $bid) {
-			$sql = "SELECT b.bid, b.bsize, b.btime, be.beva 
-					FROM books b
-					LEFT JOIN books_extra be
-					ON b.bid=be.bid
-					WHERE b.bid = $bid LIMIT 1";
+			$sql = "SELECT bid,bsize,beva,btime FROM books WHERE bid = $bid LIMIT 1";
 			$row = $db->fetchAssoc($sql);
 			$file_cont[] = json_encode($row);
 		}
